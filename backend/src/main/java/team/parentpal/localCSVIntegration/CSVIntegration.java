@@ -35,4 +35,29 @@ public class CSVIntegration {
       return false;
     }
   }
+
+  /*
+   * 
+   */
+  public List<String[]> readCSV(String csvName) {
+    CSVReader csvReader;
+
+    try {
+      csvReader = new CSVReader(new FileReader(csvName + ".csv"));
+      List<String[]> csvBody = new ArrayList<String[]>();
+      csvBody.addAll(csvReader.readAll());
+
+      for (String[] csvRecord : csvBody) {
+        for (String csvField : csvRecord) {
+          System.out.print(csvField + " ");
+        }
+        System.out.println();
+      }
+
+      return csvBody;
+    } catch (IOException | CsvException e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }

@@ -1,15 +1,23 @@
 import Home from "./pages/Home";
 import Vision from "./components/About";
+import Login from "./components/Login";
+import { useState } from "react";
+import DummyDashboard from "./components/DummyDash";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
-import Headline from "./components/Headline";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/dashboard" element={<DummyDashboard />} />
       </Routes>
     </Router>
   );

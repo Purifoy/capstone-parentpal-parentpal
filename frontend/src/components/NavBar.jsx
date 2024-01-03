@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import LoginForm from "./LoginForm";
+import axios from "axios";
+import Login from "./Login";
 
 function NavBar() {
   return (
@@ -12,7 +13,7 @@ function NavBar() {
         ></img>
         <div className="flex md:order-2 space-x-3 md:space-x-0 rtl:space-x-reverse">
           <div className="mt-5">
-            <LoginForm />
+            <Login />
           </div>
           <button
             data-collapse-toggle="navbar-sticky"

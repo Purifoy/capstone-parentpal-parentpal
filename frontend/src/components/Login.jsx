@@ -14,7 +14,7 @@ function Login({ onLoginSuccess }) {
 
       if (response.data.success) {
         onLoginSuccess();
-        navigate("/dash");
+        navigate("/dashboard");
       } else {
         console.error("Login failed: ", response.data.message);
       }

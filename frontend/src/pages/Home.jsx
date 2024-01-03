@@ -1,20 +1,27 @@
 import React from "react";
+import { Element } from "react-scroll";
 import NavBar from "../components/NavBar";
-import Headline from "../components/Headline";
-import Vision from "../components/About";
 import Footer from "../components/Footer";
 import Team from "../components/Team";
-
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import About from "../components/About";
+import Headline from "../components/Headline";
 
 function Home() {
   return (
     <>
       <NavBar />
-      <Headline />
-      <Vision />
-      <Team />
-      <Footer />
+      <Element name="home">
+        <Headline />
+      </Element>
+      <Element name="about">
+        <About />
+      </Element>
+      <Element name="team">
+        <Team />
+      </Element>
+      <Element name="contact">
+        <Footer />
+      </Element>
     </>
   );
 }

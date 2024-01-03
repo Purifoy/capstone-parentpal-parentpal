@@ -1,3 +1,5 @@
+import React from "react";
+
 function Headline() {
   return (
     <div className="bg-[#FFD9B7] flex justify-center border-none cursor-auto">

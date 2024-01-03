@@ -1,9 +1,7 @@
 import Home from "./pages/Home";
-import Vision from "./components/About";
-import Login from "./components/Login";
-import { useState } from "react";
-import DummyDashboard from "./components/DummyDash";
+import DummyDashboard from "./components/DummyDashboard";
 
+import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 

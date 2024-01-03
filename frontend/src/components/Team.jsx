@@ -1,3 +1,5 @@
+import React from "react";
+
 function Team() {
   return (
     <div className="bg-[#FFD9B7] flex justify-center border-none cursor-auto">
@@ -24,7 +26,7 @@ function Team() {
           <div className="w-60 h-60 rounded-full bg-gray-300 flex items-center justify-center">
             <img
               src="src/profile_pic/yusef.jpg"
-              alt="Yusef"
+              alt="Yusuf"
               className="rounded-full"
             />
           </div>

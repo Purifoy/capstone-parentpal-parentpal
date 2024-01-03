@@ -1,7 +1,7 @@
 function Headline() {
   return (
     <div className="bg-[#FFD9B7] flex justify-center border-none cursor-auto">
-      <a
+      <div
         href="#"
         className="m-10 block max-w p-20 bg-[#F7EFE5] border rounded-tl-3xl rounded-br-3xl shadow "
       >
@@ -16,7 +16,7 @@ function Headline() {
           quod dolore laboriosam rem totam magni veniam ratione consequuntur, et
           fugit!
         </p>
-      </a>
+      </div>
     </div>
   );
 }

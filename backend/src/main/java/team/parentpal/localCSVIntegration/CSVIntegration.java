@@ -9,7 +9,7 @@
  * JsonToCSVConverter method to allow for the conversion of CSV files 
  * to JSON objects and vice versa; This will allow working data in the 
  * system to remain in JSON format until saved to CSV. 
- * @Dependencies: com.opencsv.CSVReader, com.opencsv.CSVWriter, com.opencsv.exceptions.CsvException, java.io.FileReader, java.io.* FileWriter, java.io.IOException, java.util.ArrayList, java.util.List
+ * @Dependencies: com.opencsv.CSVReader, com.opencsv.CSVWriter, com.opencsv.exceptions.CsvException, java.io.FileReader, java.io.* FileWriter, java.io.IOException, java.util.ArrayList, java.util.List, org.json.JSONArray, org.json.JSONObject
  */
 
 package team.parentpal.localCSVIntegration;

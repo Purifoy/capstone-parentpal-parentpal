@@ -84,22 +84,41 @@ public class CSVIntegration {
     }
   }
 
-  public class CSVToJsonConverter {
-
-    public JSONObject convert(List<String[]> csvBody) {
-      JSONArray jsonArray = new JSONArray();
-      for (String[] csvRecord : csvBody) {
-        JSONObject jsonObject = new JSONObject();
-        for (int i = 0; i < csvRecord.length; i++) {
-          jsonObject.put("field" + (i + 1), csvRecord[i]);
-        }
-        jsonArray.put(jsonObject);
+  public JSONObject CSVToJsonConverter(List<String[]> csvBody) {
+    JSONArray jsonArray = new JSONArray();
+    String[] header = csvBody.get(0);
+    for (int i = 1; i < csvBody.size(); i++) {
+      String[] csvRecord = csvBody.get(i);
+      JSONObject jsonObject = new JSONObject();
+      for (int j = 0; j < csvRecord.length; j++) {
+        jsonObject.put(header[j], csvRecord[j]);
       }
-
-      JSONObject finalObject = new JSONObject();
-      finalObject.put("records", jsonArray);
-
-      return finalObject;
+      jsonArray.put(jsonObject);
     }
+
+    JSONObject finalObject = new JSONObject();
+    finalObject.put("records", jsonArray);
+
+    return finalObject;
   }
+
+  public List<String[]> JsonToCSVConverter(JSONObject jsonObject) {
+    JSONArray jsonArray = jsonObject.getJSONArray("records");
+    List<String[]> csvBody = new ArrayList<String[]>();
+    if (jsonArray.length() > 0) {
+      JSONObject firstRecord = jsonArray.getJSONObject(0);
+      String[] header = JSONObject.getNames(firstRecord);
+      csvBody.add(header);
+      for (int i = 0; i < jsonArray.length(); i++) {
+        JSONObject record = jsonArray.getJSONObject(i);
+        String[] csvRecord = new String[record.length()];
+        for (int j = 0; j < record.length(); j++) {
+          csvRecord[j] = record.getString(header[j]);
+        }
+        csvBody.add(csvRecord);
+      }
+    }
+    return csvBody;
+  }
+
 }

@@ -37,7 +37,7 @@ public class CSVIntegration {
     CSVWriter csvWriter;
 
     try {
-      csvWriter = new CSVWriter(new FileWriter(csvName + ".csv", true));
+      csvWriter = new CSVWriter(new FileWriter("resources/records/" + csvName + ".csv", true));
 
       List<String[]> csvBody = new ArrayList<String[]>();
 
@@ -64,7 +64,7 @@ public class CSVIntegration {
     CSVReader csvReader;
 
     try {
-      csvReader = new CSVReader(new FileReader(csvName + ".csv"));
+      csvReader = new CSVReader(new FileReader("resources/records/" + csvName + ".csv"));
       List<String[]> csvBody = new ArrayList<String[]>();
       csvBody.addAll(csvReader.readAll());
 

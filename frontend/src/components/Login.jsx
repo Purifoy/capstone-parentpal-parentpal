@@ -9,14 +9,20 @@ function Login({ onLoginSuccess }) {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("/api/login", { username, password });
-      console.log(response.data);
+      // const response = await axios.post("/api/login", { username, password });
+      // console.log(response.data);
+
+      const response = fetch("https://jsonplaceholder.typicode.com/users/1")
+        .then((response) => response.json())
+        .then((json) => console.log(json));
 
       if (response.data.success) {
-        onLoginSuccess();
-        navigate("/dashboard");
+        // onLoginSuccess();
+        // navigate("/dashboard");
+
+        console.log("Login successful");
       } else {
-        console.error("Login failed: ", response.data.message);
+        console.error("Login failed: Invalid Username and password");
       }
     } catch (error) {
       console.error("Login failed: ", error);

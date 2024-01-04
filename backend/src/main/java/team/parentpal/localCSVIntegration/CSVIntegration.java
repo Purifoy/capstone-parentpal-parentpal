@@ -21,6 +21,8 @@ import java.util.List;
 import com.opencsv.CSVReader;
 import com.opencsv.CSVWriter;
 import com.opencsv.exceptions.CsvException;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 public class CSVIntegration {
   /*
@@ -79,6 +81,25 @@ public class CSVIntegration {
     } catch (IOException | CsvException e) {
       e.printStackTrace();
       return null;
+    }
+  }
+
+  public class CSVToJsonConverter {
+
+    public JSONObject convert(List<String[]> csvBody) {
+      JSONArray jsonArray = new JSONArray();
+      for (String[] csvRecord : csvBody) {
+        JSONObject jsonObject = new JSONObject();
+        for (int i = 0; i < csvRecord.length; i++) {
+          jsonObject.put("field" + (i + 1), csvRecord[i]);
+        }
+        jsonArray.put(jsonObject);
+      }
+
+      JSONObject finalObject = new JSONObject();
+      finalObject.put("records", jsonArray);
+
+      return finalObject;
     }
   }
 }

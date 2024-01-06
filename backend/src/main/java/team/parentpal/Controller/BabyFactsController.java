@@ -1,4 +1,4 @@
-package team.parentpal.controller;
+package team.parentpal.Controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -61,7 +61,7 @@ public class BabyFactsController {
             "Newborns may display the grasp reflex, involuntarily grabbing onto objects placed in their hands.",
             "A baby's skin is more permeable than an adult's, making it sensitive to the chemicals in certain skincare products.",
             "Babies can recognize and imitate simple gestures, such as waving bye-bye, around 8 to 12 months of age."
-    
+
     );
 
     @GetMapping("/babyfact")
@@ -71,4 +71,3 @@ public class BabyFactsController {
         return babyFacts.get(index);
     }
 }
-

@@ -1,4 +1,4 @@
-package team.parentpal.Controller;
+package team.parentpal.controller;
 
 import java.util.List;
 

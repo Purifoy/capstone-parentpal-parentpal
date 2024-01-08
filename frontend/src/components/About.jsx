@@ -2,7 +2,7 @@ import React from "react";
 
 function About() {
   return (
-    <div className="flex justify-center mt-10" id="vision">
+    <div className="flex justify-center mt-10">
       <div
         href="#"
         className="m-10 block max-w-xl p-20 bg-[#F7EFE5] border border-gray-200 rounded-bl-3xl rounded-tr-3xl shadow"

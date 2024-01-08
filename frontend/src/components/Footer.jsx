@@ -57,7 +57,7 @@ function Footer() {
         </div>
         <hr className="my-6 border-[#FFD9B7] sm:mx-auto  lg:my-8" />
         <span className="block text-sm text-gray-500 sm:text-center ">
-          © 2023 ParentPal™. All Rights Reserved.
+        &copy; {new Date().getFullYear()} ParentPal™. All Rights Reserved.
         </span>
       </div>
     </footer>

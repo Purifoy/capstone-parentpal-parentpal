@@ -1,9 +1,12 @@
 import Home from "./pages/Home";
 import DummyDashboard from "./components/DummyDashboard";
+import BabyFactsCard from "./components/BabyFactsCard";
+import ToDoListCard from "./components/ToDoListCard";
 
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
+
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

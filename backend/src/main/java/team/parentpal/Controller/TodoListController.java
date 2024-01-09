@@ -21,14 +21,14 @@ public class TodoListController {
 
     @PostMapping("/addtask")
     public String addTask(@RequestBody String task) {
-        todoListService.addTask(task);  
+        todoListService.addTask(task);
         return "Task added successfully: " + task;
     }
 
     @DeleteMapping("/deletetask/{addedTask}")
-    public String deleteTask(@PathVariable int addedTask){
+    public String deleteTask(@PathVariable String addedTask) {
         todoListService.deleteTask(addedTask);
         return "Task deleted successfully";
-    
+
     }
 }

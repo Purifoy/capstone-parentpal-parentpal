@@ -33,13 +33,13 @@ function ToDoListCard() {
           setNewTodo("");
           fetchTodoList();
         })
-        .const((error) => console.error("Error adding todo:", error));
+        .catch((error) => console.error("Error adding todo:", error));
     }
   };
 
-  const handleDeleteTodo = (addedTask) => {
+  const handleDeleteTodo = (task) => {
     axios
-      .delete(`/api/todolist/deletetask/${addedTask}`)
+      .delete(`/api/todolist/deletetask/${encodeURIComponent(task)}`)
       .then((response) => {
         console.log(response.data);
         fetchTodoList(); //fetch the updated to do list
@@ -51,11 +51,11 @@ function ToDoListCard() {
     <div>
       <h1 className="text-2xl font-[Roboto]">Todo List</h1>
       <ul>
-        {todos.map((todo, addedTask) => (
-          <li key={addedTask}>
+        {todos.map((todo) => (
+          <li key={todo}>
             {todo}
             <button
-              onClick={() => handleDeleteTodo(addedTask)}
+              onClick={() => handleDeleteTodo(todo)}
               type="button"
               class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
             >

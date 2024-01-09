@@ -48,37 +48,49 @@ function ToDoListCard() {
   };
 
   return (
-    <div>
-      <h1 className="text-2xl font-[Roboto]">Todo List</h1>
-      <ul>
-        {todos.map((todo) => (
-          <li key={todo}>
-            {todo}
+    <>
+      <div className="max-w-sm border border-gray-300 rounded-lg shadow">
+        <div className="flex items-center justify-center">
+          <img
+            className="flex flex-row align-middle"
+            src="./src/assets/todo.png"
+            alt="todo"
+            style={{ height: "50px" }}
+          />
+        </div>
+        <div className=" p-5">
+          <ul>
+            {todos.map((todo) => (
+              <li key={todo}>
+                {todo}
+                <button
+                  onClick={() => handleDeleteTodo(todo)}
+                  type="button"
+                  class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
+                >
+                  Delete Task
+                </button>
+              </li>
+            ))}
+          </ul>
+          <div>
+            <input
+              className="w-32 opacity-80 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+              type="text"
+              value={newTodo}
+              onChange={(e) => setNewTodo(e.target.value)}
+            />
             <button
-              onClick={() => handleDeleteTodo(todo)}
+              onClick={handleAddTodo}
               type="button"
               class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
             >
-              Delete Task
+              Add Task
             </button>
-          </li>
-        ))}
-      </ul>
-      <div>
-        <input
-          type="text"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-        />
-        <button
-          onClick={handleAddTodo}
-          type="button"
-          class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
-        >
-          Add Task
-        </button>
+          </div>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 

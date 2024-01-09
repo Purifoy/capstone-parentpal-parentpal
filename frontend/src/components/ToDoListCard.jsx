@@ -73,17 +73,18 @@ function ToDoListCard() {
               </li>
             ))}
           </ul>
-          <div>
+          <div className="flex items-center space-x-2">
             <input
-              className="w-32 opacity-80 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
+              className="h-8 opacity-80 p-2 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
               type="text"
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
             />
+
             <button
               onClick={handleAddTodo}
               type="button"
-              class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 "
+              className="h-8 flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Add Task
             </button>

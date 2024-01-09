@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import Team from "../components/Team";
 import About from "../components/About";
 import Headline from "../components/Headline";
-import Banner from "../components/Banner";
+
 
 function Home() {
   return (

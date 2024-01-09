@@ -24,4 +24,11 @@ public class TodoListController {
         todoListService.addTask(task);  
         return "Task added successfully: " + task;
     }
+
+    @DeleteMapping("/deletetask/{addedTask}")
+    public String deleteTask(@PathVariable int addedTask){
+        todoListService.deleteTask(addedTask);
+        return "Task deleted successfully";
+    
+    }
 }

@@ -17,4 +17,10 @@ public class TodoListService {
     public void addTask(String task) {
         todoList.add(task);
     }
+
+    public void deleteTask(int addedTask){
+        if (addedTask >= 0 && addedTask < todoList.size()){
+            todoList.remove(addedTask);
+        }
+    }
 }

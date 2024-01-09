@@ -7,7 +7,6 @@ import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";
 
-
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const handleLoginSuccess = () => {
@@ -19,6 +18,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/dashboard" element={<DummyDashboard />} />
+        {/* <Route path="/test" element={<BabyFactsCard />} /> */}
+        <Route path="/test" element={<ToDoListCard />} />
       </Routes>
     </Router>
   );

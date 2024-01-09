@@ -9,15 +9,15 @@ function About() {
         </h1>
         <p className="font-normal font-[Roboto] text-lg  text-gray-700 dark:text-gray-400">
           Welcome to ParentPal! At the heart of our mission is the commitment to
-          streamline the journey of parenting by providing tools for smart baby
-          schedule management and fostering the development of healthy routines.
-          We understand the challenges that come with raising a child, and our
-          goal is to empower parents with the resources they need to navigate
-          this incredible journey with ease. Our platform is designed to offer
-          support, guidance, and valuable resources, ensuring that every parent
-          can enjoy the beautiful experience of parenthood while nurturing the
-          well-being of their little ones. Join us on this adventure, where we
-          make parenthood simpler, smarter, and more joyful.
+          streamline the journey of parenting by providing tools and fostering
+          the development of healthy routines. We understand the challenges that
+          come with raising a child, and our goal is to empower parents with the
+          resources they need to navigate this incredible journey with ease. Our
+          platform is designed to offer support, guidance, and valuable
+          resources, ensuring that every parent can enjoy the beautiful
+          experience of parenthood while nurturing the well-being of their
+          little ones. Join us on this adventure, where we make parenthood
+          simpler, smarter, and more joyful.
         </p>
       </div>
     </div>

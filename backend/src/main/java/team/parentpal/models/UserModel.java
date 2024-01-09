@@ -9,23 +9,23 @@ public class UserModel {
     @GeneratedValue
     private long id;
 
-    @OneToMany
-    private Long[] authorizedUsersForSharing;
-
-    @ManyToMany
-    private Long[] usersAuthorizationForViewing;
+    // @OneToMany
+    // private Long[] authorizedUsersForSharing;
+    //
+    // @ManyToMany
+    // private Long[] usersAuthorizationForViewing;
 
     private String name;
-    private String userId;
+    private String userName;
     private String password;
     private RoleEnum role;
-   
+
     public UserModel() {
     }
 
-    public UserModel(String name, String userId, String password, RoleEnum role) {
+    public UserModel(String name, String userName, String password, RoleEnum role) {
         this.name = name;
-        this.userId = userId;
+        this.userName = userName;
         this.password = password;
         this.role = role;
     }
@@ -46,12 +46,12 @@ public class UserModel {
         this.name = name;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {
@@ -70,5 +70,4 @@ public class UserModel {
         this.role = role;
     }
 
-  
 }

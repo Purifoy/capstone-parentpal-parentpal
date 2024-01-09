@@ -6,12 +6,10 @@ import Team from "../components/Team";
 import About from "../components/About";
 import Headline from "../components/Headline";
 
-
 function Home() {
   return (
     <>
       <NavBar />
-  
       <Element name="home">
         <Headline />
       </Element>

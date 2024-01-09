@@ -49,7 +49,7 @@ function ToDoListCard() {
 
   return (
     <>
-      <div className="max-w-sm border border-gray-300 rounded-lg shadow">
+      <div className="max-w-sm border bg-[#D0E7D2] border-gray-300 rounded-lg shadow">
         <div className="flex items-center justify-center">
           <img
             className="flex flex-row align-middle"
@@ -84,7 +84,7 @@ function ToDoListCard() {
             <button
               onClick={handleAddTodo}
               type="button"
-              className="h-8 flex items-center text-white bg-gradient-to-r from-teal-400 via-teal-500 to-teal-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+              className="h-8 flex items-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
               Add Task
             </button>

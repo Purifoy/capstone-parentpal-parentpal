@@ -3,7 +3,7 @@ import React from "react";
 function About() {
   return (
     <div className="flex justify-center mt-10">
-      <div className="m-10 block max-w-4xl p-20 bg-[#F7EFE5] border border-gray-200 rounded-bl-3xl rounded-tr-3xl shadow">
+      <div className="m-10 block max-w-4xl p-20 bg-[#D0E7D2] rounded-bl-3xl rounded-tr-3xl shadow-black shadow-lg">
         <h1 className="font-[Monserrat] text-center mb-5 text-3xl font-bold tracking-tight text-gray-900">
           About Us
         </h1>

@@ -26,8 +26,9 @@ function ToDoListCard() {
 
   const handleAddTodo = () => {
     if (newTodo.trim() !== "") {
+      const encodedTodo = encodeURIComponent(newTodo); // Encode the task string
       axios
-        .post("/api/todolist/addtask", newTodo)
+        .post("/api/todolist/addtask", encodedTodo)
         .then((response) => {
           console.log(response.data);
           setNewTodo("");
@@ -36,6 +37,7 @@ function ToDoListCard() {
         .catch((error) => console.error("Error adding todo:", error));
     }
   };
+  
 
   const handleDeleteTodo = (task) => {
     axios

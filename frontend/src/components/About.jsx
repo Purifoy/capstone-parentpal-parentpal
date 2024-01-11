@@ -7,7 +7,7 @@ function About() {
         <h1 className="font-[Play] text-center mb-5 text-3xl font-bold tracking-tight text-gray-900">
           About Us
         </h1>
-        <p className="font-normal font-[Instrument] text-xl  text-gray-700 select-none">
+        <p className="font-normal text-lg  text-gray-700 select-none">
           Welcome to ParentPal! At the heart of our mission is the commitment to
           streamline the journey of parenting by providing tools and fostering
           the development of healthy routines. We understand the challenges that

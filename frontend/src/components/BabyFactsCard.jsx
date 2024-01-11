@@ -44,7 +44,7 @@ function BabyFactsCard() {
           />
         </div>
         <br />
-        <p className="font-[Montserrat] ">{someFact}</p>
+        <p className="font-[Mont] ">{someFact}</p>
       </div>
     </>
   );

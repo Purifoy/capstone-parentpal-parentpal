@@ -22,6 +22,11 @@
   src: url(fonts/PlayfairDisplay-Regular.ttf);
 }
 
+@font-face {
+  font-family: Mont;
+  src: url(fonts/MontserratAlternates-Regular.ttf);
+}
+
 .custom-width {
   width: 500px; /* Set your desired width here */
 }

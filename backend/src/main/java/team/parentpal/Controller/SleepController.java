@@ -27,12 +27,17 @@ public class SleepController {
     return sleepRepository.save(sleep);
   }
 
-  @GetMapping("/sleep/{id}")
+  @GetMapping("/all")
+  public Iterable<SleepModel> getAllSleepEvents() {
+    return sleepRepository.findAll();
+  }
+
+  @GetMapping("/{id}")
   public Optional<SleepModel> getSleepEvent(@PathVariable Long id) {
     return sleepRepository.findById(id);
   }
 
-  @GetMapping("/sleep/{startDateTime}/{endDateTime}")
+  @GetMapping("/{startDateTime}/{endDateTime}")
   public List<SleepModel> getSleepEvent(@PathVariable Date startDateTime, @PathVariable Date endDateTime) {
     return sleepRepository.findBySleepDateRange(startDateTime, endDateTime);
   }

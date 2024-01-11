@@ -27,12 +27,17 @@ public class ConsumeController {
     return consumeRepository.save(consume);
   }
 
-  @GetMapping("/consume/{id}")
+  @GetMapping("/all")
+  public Iterable<ConsumeModel> getAllConsumeEvents() {
+    return consumeRepository.findAll();
+  }
+
+  @GetMapping("/{id}")
   public Optional<ConsumeModel> getConsumeEvent(@PathVariable Long id) {
     return consumeRepository.findById(id);
   }
 
-  @GetMapping("/consume/{startDateTime}/{endDateTime}")
+  @GetMapping("/{startDateTime}/{endDateTime}")
   public List<ConsumeModel> getConsumeEvent(@PathVariable Date startDateTime, @PathVariable Date endDateTime) {
     return consumeRepository.findByConsumeDateRange(startDateTime, endDateTime);
   }

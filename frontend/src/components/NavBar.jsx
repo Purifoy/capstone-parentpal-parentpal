@@ -1,6 +1,8 @@
 import React from "react";
 import Login from "./Login";
+import { Link as RouterLink } from "react-router-dom";
 import { Link, animateScroll as scroll } from "react-scroll";
+
 
 function NavBar() {
   return (
@@ -46,6 +48,12 @@ function NavBar() {
         >
           <ul className="text-lg font-[Roboto] font-bold flex flex-col md:p-0 mt-4 font-medium border  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
             <li>
+              <RouterLink to="/test" className="cursor-pointer">
+                Test
+              </RouterLink>
+            </li>
+
+            <li>
               <Link
                 to="home"
                 spy={true}
@@ -83,16 +91,16 @@ function NavBar() {
               </Link>
             </li>
             <li>
-                <Link
-                  to="contact"
-                  spy={true}
-                  smooth={true}
-                  offset={-70}
-                  duration={500}
-                  className="cursor-pointer block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 "
-                >
-                  Contact
-                </Link>
+              <Link
+                to="contact"
+                spy={true}
+                smooth={true}
+                offset={-70}
+                duration={500}
+                className="cursor-pointer block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:hover:text-blue-700 md:p-0 "
+              >
+                Contact
+              </Link>
             </li>
           </ul>
         </div>

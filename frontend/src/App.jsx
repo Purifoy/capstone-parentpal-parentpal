@@ -1,5 +1,5 @@
 import Home from "./pages/Home";
-import DummyDashboard from "./components/DummyDashboard";
+import LoggedInDashboard from "./pages/LoggedInDashboard";
 
 import { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
@@ -15,7 +15,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/dashboard" element={<DummyDashboard />} />
+        
+        {/* <Route path="/test" element={<BabyFactsCard />} /> */}
+        <Route path="/test" element={<LoggedInDashboard />} />
       </Routes>
     </Router>
   );

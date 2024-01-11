@@ -16,16 +16,16 @@ public class UserModel {
     // private Long[] usersAuthorizationForViewing;
 
     private String name;
-    private String userName;
+    private String userId;
     private String password;
     private RoleEnum role;
 
     public UserModel() {
     }
 
-    public UserModel(String name, String userName, String password, RoleEnum role) {
+    public UserModel(String name, String userId, String password, RoleEnum role) {
         this.name = name;
-        this.userName = userName;
+        this.userId= userId;
         this.password = password;
         this.role = role;
     }
@@ -46,13 +46,7 @@ public class UserModel {
         this.name = name;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    
 
     public String getPassword() {
         return password;
@@ -68,6 +62,14 @@ public class UserModel {
 
     public void setRole(RoleEnum role) {
         this.role = role;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
 }

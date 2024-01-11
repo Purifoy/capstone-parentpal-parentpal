@@ -3,8 +3,8 @@ import React from "react";
 function Team() {
   return (
     <div className="bg-[#FFD9B7] flex justify-center border-none cursor-auto">
-      <div href="#" className="m-40 ">
-        <h1 className="font-[Monserrat] justify-center text-center mb-10 text-3xl font-bold tracking-tight text-gray-900">
+      <div className="m-40">
+        <h1 className="font-[Play] justify-center text-center mb-10 text-3xl font-bold tracking-tight text-gray-900">
           Meet the Team
         </h1>
         <br></br>

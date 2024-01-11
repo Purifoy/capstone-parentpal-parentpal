@@ -2,12 +2,12 @@ import React from "react";
 
 function About() {
   return (
-    <div className="flex justify-center mt-10">
+    <div className="flex justify-center mt-10 mb-10">
       <div className="m-10 block max-w-4xl p-20 bg-[#D0E7D2] rounded-bl-3xl rounded-tr-3xl shadow-black shadow-lg">
-        <h1 className="font-[Monserrat] text-center mb-5 text-3xl font-bold tracking-tight text-gray-900">
+        <h1 className="font-[Play] text-center mb-5 text-3xl font-bold tracking-tight text-gray-900">
           About Us
         </h1>
-        <p className="font-normal font-[Roboto] text-lg  text-gray-700 dark:text-gray-400">
+        <p className="font-normal font-[Instrument] text-xl  text-gray-700 select-none">
           Welcome to ParentPal! At the heart of our mission is the commitment to
           streamline the journey of parenting by providing tools and fostering
           the development of healthy routines. We understand the challenges that

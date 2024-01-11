@@ -3,9 +3,9 @@ import React from "react";
 function Headline() {
   return (
     <div className="bg-[#FFD9B7] flex justify-center border-none cursor-auto">
-      <section className="mb-10 border rounded-tl-3xl rounded-br-3xl bg-center bg-no-repeat bg-cover bg-[url('src/assets/baby2.jpg')] bg-gray-700 bg-blend-multiply">
+      <section className="mb-10 border rounded-tl-3xl rounded-br-3xl bg-center bg-no-repeat bg-cover bg-[url('src/assets/baby2.jpg')] bg-gray-700 bg-blend-multiply select-none">
         <div className="px-4 mx-auto max-w-screen-xl text-center py-24 lg:py-56">
-          <h1 className="font-[Monserrat] mb-2 text-3xl font-bold tracking-tight text-white  md:text-5xl lg:text-6xl">
+          <h1 className="font-[Play] mb-2 text-2xl text-white  md:text-4xl lg:text-5xl">
             Simplifying Parenthood with Smart Baby Schedule Management and
             Healthy Routine Development
           </h1>

@@ -3,16 +3,6 @@
 @tailwind utilities;
 
 @font-face {
-  font-family: Doodle;
-  src: url(fonts/RubikDoodleShadow-Regular.ttf);
-}
-
-@font-face {
-  font-family: Montserrat;
-  src: url(fonts/MontserratAlternates-Regular.ttf);
-}
-
-@font-face {
   font-family: Roboto;
   src: url(fonts/Roboto-Regular.ttf);
 }
@@ -20,4 +10,18 @@
 @font-face {
   font-family: Petit;
   src: url(fonts/Petit-Cochon.ttf);
+}
+
+@font-face {
+  font-family: Instrument;
+  src: url(fonts/InstrumentSerif-Regular.ttf);
+}
+
+@font-face {
+  font-family: Play;
+  src: url(fonts/PlayfairDisplay-Regular.ttf);
+}
+
+.custom-width {
+  width: 500px; /* Set your desired width here */
 }

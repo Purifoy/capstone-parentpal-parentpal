@@ -11,6 +11,9 @@ function Login() {
     try {
       const response = await axios.post("/api/login", { userId, password });
       console.log(response.data);
+
+      localStorage.setItem("userId", userId);
+
       navigate("/Dashboard");
 
     } catch (error) {

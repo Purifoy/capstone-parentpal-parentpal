@@ -1,6 +1,5 @@
 import React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
 
 import BabyFactsCard from "../components/BabyFactsCard";
 import ToDoListCard from "../components/ToDoListCard";
@@ -10,13 +9,15 @@ import UserProfile from "../components/UserProfile";
 
 function LoggedInDashboard() {
 
+  const userId = localStorage.getItem("userId");
+
   return (
     <>
       <NavBar2 />
       <div className="flex justify-center">
         <section className="m-10 block max-w-4xl bg-[#B799FF] rounded-bl-3xl rounded-tr-3xl shadow-black shadow-lg">
           <div className="flex flex-col items-center justify-center">
-            <UserProfile />
+            <UserProfile userId={userId} />
             <br />
             <hr className="border-t border-gray-900 custom-width my-5" />
           </div>

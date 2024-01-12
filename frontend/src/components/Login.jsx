@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-function Login({ onLoginSuccess }) {
-  const [username, setUsername] = useState("");
+function Login() {
+  const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post("/api/login", { username, password });
+      const response = await axios.post("/api/login", { userId, password });
       console.log(response.data);
+      navigate("/Dashboard");
 
-      
     } catch (error) {
       console.error("Login failed: ", error);
     }
@@ -24,8 +24,8 @@ function Login({ onLoginSuccess }) {
         type="text"
         placeholder="username"
         className="mr-5 border-solid rounded "
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={userId}
+        onChange={(e) => setUserId(e.target.value)}
       />
       <span>
         <input

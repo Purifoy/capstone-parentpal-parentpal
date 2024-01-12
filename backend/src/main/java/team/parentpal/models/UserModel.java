@@ -46,7 +46,6 @@ public class UserModel {
         this.name = name;
     }
 
-    
 
     public String getPassword() {
         return password;

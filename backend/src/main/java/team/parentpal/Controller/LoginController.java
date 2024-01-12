@@ -1,4 +1,7 @@
 package team.parentpal.controller;
+
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -42,4 +45,11 @@ public class LoginController extends BaseController {
     public ResponseEntity<?> getUser() {
         return ResponseEntity.ok(userRepository.findAll());
     }
+
+    @GetMapping("/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable String userId) {
+       return ResponseEntity.ok(userRepository.findByUserId(userId));
+
+    }
+
 }

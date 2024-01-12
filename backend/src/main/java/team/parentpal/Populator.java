@@ -11,7 +11,7 @@ import team.parentpal.repositories.UserRepository;
 @Component
 public class Populator implements CommandLineRunner {
 
-     @Resource
+    @Resource
     private UserRepository userRepository;
 
     public Populator(UserRepository userRepository) {
@@ -20,8 +20,10 @@ public class Populator implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        UserModel user1 = new UserModel("Admin", "admin", "password", RoleEnum.ADMIN);
+        UserModel user1 = new UserModel("Admin", "admin", "power4321!", RoleEnum.ADMIN);
         userRepository.save(user1);
+        UserModel user2 = new UserModel("Guest", "guest", "noPassword", RoleEnum.GUEST);
+        userRepository.save(user2);
 
     }
 

@@ -14,16 +14,6 @@ function ToDoListCard() {
     fetchTodoList();
   }, []);
 
-  const fetchTodoList = () => {
-    axios
-      .get("/api/todolist")
-      .then((response) => {
-        setTodos(response.data);
-      })
-
-      .catch((error) => console.error("Error fetching todo list:", error));
-  };
-
   const handleAddTodo = () => {
     if (newTodo.trim() !== "") {
       const encodedTodo = encodeURIComponent(newTodo); // Encode the task string
@@ -37,7 +27,16 @@ function ToDoListCard() {
         .catch((error) => console.error("Error adding todo:", error));
     }
   };
-  
+
+  const fetchTodoList = () => {
+    axios
+      .get("/api/todolist")
+      .then((response) => {
+        setTodos(response.data);
+      })
+
+      .catch((error) => console.error("Error fetching todo list:", error));
+  };
 
   const handleDeleteTodo = (task) => {
     axios
@@ -60,7 +59,7 @@ function ToDoListCard() {
             style={{ height: "50px" }}
           />
         </div>
-        <div className="p-5 ">
+        <div className="p-5">
           <ul>
             {todos.map((todo) => (
               <li key={todo}>
@@ -71,7 +70,8 @@ function ToDoListCard() {
                   className="h-5  flex flex-row items-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
                 >
                   Delete Task
-                </button><br/>
+                </button>
+                <br />
               </li>
             ))}
           </ul>
@@ -82,7 +82,6 @@ function ToDoListCard() {
               value={newTodo}
               onChange={(e) => setNewTodo(e.target.value)}
             />
-
             <button
               onClick={handleAddTodo}
               type="button"

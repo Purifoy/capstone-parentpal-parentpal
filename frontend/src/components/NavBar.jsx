@@ -47,11 +47,11 @@ function NavBar() {
           id="navbar-sticky"
         >
           <ul className="text-lg font-[Roboto] font-bold flex flex-col md:p-0 mt-4 font-medium border  md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0">
-            {/* <li>
-              <RouterLink to="/test" className="cursor-pointer">
+            <li>
+              <RouterLink to="/testpage" className="cursor-pointer">
                 Test
               </RouterLink>
-            </li> */}
+            </li>
 
             <li>
               <Link

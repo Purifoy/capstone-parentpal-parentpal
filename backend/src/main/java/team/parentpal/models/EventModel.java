@@ -4,10 +4,12 @@ import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 @MappedSuperclass
 public abstract class EventModel {
@@ -15,11 +17,11 @@ public abstract class EventModel {
   @GeneratedValue
   private Long id;
 
-  // @ManyToOne
-  // private long childId;
   private long childId;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+  @Column(name = "start_time")
+  @Temporal(TemporalType.TIMESTAMP)
   private Date startTime;
 
   private String notes;

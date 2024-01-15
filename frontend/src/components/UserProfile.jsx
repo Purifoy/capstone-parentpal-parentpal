@@ -89,7 +89,7 @@ function UserProfile({ userId }) {
 
         {showAddChildForm && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
-            <div className="bg-white p-6 rounded-lg">
+            <div className="bg-transparent p-6 rounded-lg">
               <AddEditChildProfile onFormSubmit={handleFormSubmit} />
               <button
                 className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4"

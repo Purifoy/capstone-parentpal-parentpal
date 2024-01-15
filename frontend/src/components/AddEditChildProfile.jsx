@@ -15,9 +15,19 @@ function AddEditChildProfile(child) {
       } else {
         await axios.post("/api/childprofile", childData);
         console.log("It works! added to database");
+
+        //Success message
+        Swal.fire({
+          title: "Success!",
+          text: "child added successfully",
+          icon: "success",
+        });
       }
 
-    
+      // Clear the input fields after successful submission
+      setName("");
+      setAge("");
+      
     } catch (error) {
       console.error("Error adding child to database: ", error);
     }

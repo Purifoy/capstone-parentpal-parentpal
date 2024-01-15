@@ -27,7 +27,7 @@ function BabyFactsCard() {
 
   return (
     <>
-      <div class="flex flex-col max-w-sm p-6 bg-[#D0E7D2] border border-gray-200 rounded-lg">
+      <div className="flex flex-col max-w-sm p-6 bg-[#D0E7D2] border border-gray-200 rounded-lg">
         <button
           type="button"
           onClick={handleActivityChange}

@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddEditChildProfile from "./AddEditChildProfile";
+import { useNavigate } from "react-router-dom";
 
 function UserProfile({ userId }) {
   const [userName, setUserName] = useState(null);
   const [childProfiles, setChildProfiles] = useState([]);
   const [showAddChildForm, setShowAddChildForm] = useState(false);
+  const navigate = useNavigate();
 
   //fetching all of the profiles
   useEffect(() => {
@@ -18,6 +20,12 @@ function UserProfile({ userId }) {
   //for handling child profile when button is clicked for a specific profile
   const handleProfileButtonClick = (profileId) => {
     console.log(`Button clicked for Child with ID # ${profileId}`);
+
+    const selectedChild = childProfiles.find(
+      (profile) => profile.id === profileId
+    );
+    //when clicked it will navigate to the ChildProfile component
+    navigate(`/child-profile`, { state: { childData: selectedChild } });
   };
 
   //for User fetching user details

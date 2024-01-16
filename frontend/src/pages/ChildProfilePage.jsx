@@ -1,17 +1,67 @@
-import React from "react";
+import React, { useState } from "react";
 import NavBar2 from "../components/NavBar2";
 import Footer from "../components/Footer";
+import EditChildProfile from "../components/EditChildProfile";
 
-import UserProfile from "../components/UserProfile";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 function ChildProfilePage() {
+  //for the logs, start&end buttons
+  const [currentTime, setCurrentTime] = useState("Not Available");
+  const [startTime, setStartTime] = useState(null);
+  const [endTime, setEndTime] = useState(null);
+
+  //for the edit button
+  const [isEditing, setIsEditing] = useState(false);
   const location = useLocation();
-  const childData = location.state?.childData || {};
+  const [childData, setChildData] = useState(location.state?.childData || {});
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate("/Dashboard");
+  };
+
+  const handleEdit = (childId) => {
+    console.log(`Button clicked for Child with ID # ${childId}`);
+    setIsEditing(true);
+  };
+
+  //this will get us the current time
+  const handleLogCurrentTime = async (logType) => {
+    try {
+      const now = new Date();
+      const formattedTime = now.toISOString().slice(0, 16).replace("T", " "); // Format as "yyyy-MM-dd'T'HH:mm"
+
+      if (logType === "start") {
+        setStartTime(formattedTime);
+        console.log("Start time set!", formattedTime);
+      } else if (logType === "end") {
+        setEndTime(formattedTime);
+        console.log("End time set!", formattedTime);
+      }
+
+      setCurrentTime(formattedTime);
+      console.log("Got the time!", formattedTime);
+    } catch (error) {
+      console.error("Error logging time: ", error);
+    }
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("/sleep/new", {
+        childId: childData.id,
+        startTime: new Date(startTime), // Convert Time to Date object
+        endTime: new Date(endTime),
+      });
+
+      console.log("Log Saved!", response.data);
+    } catch (error) {
+      console.log("Error saving log!", error);
+    }
   };
 
   return (
@@ -50,18 +100,15 @@ function ChildProfilePage() {
               </h5>
               <div className="font-[Play]">{childData.age} old</div>
               <div className="flex mt-4 md:mt-6">
-                <a
-                  href="#"
+                <button
+                  onClick={() => handleEdit(childData.id)}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 "
                 >
                   Edit
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-red-700 border border-red-700 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red ms-3"
-                >
+                </button>
+                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-red-700 border border-red-700 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red ms-3">
                   Delete
-                </a>
+                </button>
               </div>
               {/*SleepLog code  starts here */}
               <div className="mt-10">
@@ -69,33 +116,35 @@ function ChildProfilePage() {
                   <span className="font-bold">Sleep Log</span>
                 </h1>
                 <ul className="flex flex-row justify-center gap-8">
-                  <li>Start Time: {childData.startTime || "Not available"}</li>
+                  <li>Start Time: {startTime}</li>
+
                   <li className="pl-5 pr-5 border-x-2 border-black">
-                    End time: {childData.endTime || "Not available"}
+                    End time: {endTime}
                   </li>
+
                   <li>Duration: {childData.duration || "Not available"}</li>
                 </ul>
               </div>
 
               <div className="flex mt-4 md:mt-6">
-                <a
-                  href="#"
+                <button
+                  onClick={() => handleLogCurrentTime("start")}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
                 >
                   Start Sleep
-                </a>
-                <a
-                  href="#"
+                </button>
+                <button
+                  onClick={() => handleLogCurrentTime("end")}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
                 >
                   End Sleep
-                </a>
-                <a
-                  href="#"
+                </button>
+                <button
+                  onClick={handleSave}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 rounded-lg ms-3"
                 >
-                  Submit
-                </a>
+                  Save
+                </button>
               </div>
 
               {/* Feed Log code starts here */}
@@ -104,38 +153,42 @@ function ChildProfilePage() {
                   <span className="font-bold">Feed Log</span>
                 </h1>
                 <ul className="flex flex-row justify-center gap-8">
-                  <li>
-                    Start Time: {childData.feedStartTime || "Not available"}
-                  </li>
+                  <li>Start Time: {"Not available"}</li>
                   <li className="pl-5 pr-5 border-x-2 border-black">
-                    End time: {childData.feedEndTime || "Not available"}
+                    End time: {"Not available"}
                   </li>
-                  <li>Duration: {childData.feedDuration || "Not available"}</li>
+                  <li>Duration: {"Not available"}</li>
                 </ul>
               </div>
               <div className="flex mt-4 md:mt-6">
-                <a
-                  href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
-                >
+                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3">
                   Start Time
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
-                >
+                </button>
+                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3">
                   End Time
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 rounded-lg ms-3"
-                >
-                  Submit
-                </a>
+                </button>
+                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 rounded-lg ms-3">
+                  Save
+                </button>
               </div>
-
             </div>
             <div></div>
+
+            {isEditing && ( ///EDIT is not working yet
+              <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
+                <div className="bg-transparent p-6 rounded-lg">
+                  <EditChildProfile childId={childData.id} />
+                  <button
+                    className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4"
+                    onClick={() => {
+                      setIsEditing(false);
+                    }}
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

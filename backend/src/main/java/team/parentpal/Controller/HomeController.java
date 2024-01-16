@@ -9,7 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
-import team.parentpal.services.CurrentTimeService; 
+import team.parentpal.services.CurrentTimeService;
 
 @Controller
 public class HomeController {
@@ -25,16 +25,13 @@ public class HomeController {
         try {
             String currentTime = currentTimeService.getCurrentTime("http://worldtimeapi.org/api/ip");
 
-            
             DateTimeFormatter formatter = DateTimeFormatter.ISO_DATE_TIME;
             ZonedDateTime zonedDateTime = ZonedDateTime.parse(currentTime, formatter);
 
-            
             if (timezone != null && !timezone.isEmpty()) {
                 zonedDateTime = zonedDateTime.withZoneSameInstant(ZoneId.of(timezone));
             }
 
-            
             String formattedTime = zonedDateTime.format(formatter);
 
             model.addAttribute("currentTime", formattedTime);

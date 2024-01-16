@@ -1,6 +1,7 @@
 package team.parentpal.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -8,11 +9,16 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.micrometer.common.lang.NonNull;
+import jakarta.servlet.http.HttpServletRequest;
+import team.parentpal.enums.RoleEnum;
 import team.parentpal.models.ChildProfileModel;
+import team.parentpal.repositories.ChildProfileRepository;
 import team.parentpal.services.ChildProfileService;
 
 @RestController
@@ -21,6 +27,7 @@ public class ChildProfileController {
 
     @Autowired
     private ChildProfileService childProfileService;
+    private ChildProfileRepository childProfileRepository;
 
     // Endpoint to add a child profile
     @PostMapping
@@ -28,6 +35,35 @@ public class ChildProfileController {
         // Call service to add a child profile
         ChildProfileModel createdProfile = childProfileService.addChildProfile(childProfile);
         return ResponseEntity.ok(createdProfile);
+    }
+
+    @PutMapping("/api/childprofile/{childProfileId}")
+    public ResponseEntity<?> updateChildProfile(
+            @PathVariable Long childProfileId,
+            @RequestBody ChildProfileModel newChildProfile,
+            HttpServletRequest request) {
+        try {
+            
+            // Find the existing child profile by ID
+            Optional<ChildProfileModel> existingChildProfileOptional = childProfileRepository.findById(childProfileId);
+
+            if (existingChildProfileOptional.isPresent()) {
+                ChildProfileModel existingChildProfile = existingChildProfileOptional.get();
+
+                // Update the existing child profile with the new data
+                existingChildProfile.setName(newChildProfile.getName());
+                existingChildProfile.setAge(newChildProfile.getAge());
+
+                // Save the updated child profile
+                ChildProfileModel updatedChildProfile = childProfileRepository.save(existingChildProfile);
+
+                return ResponseEntity.ok(updatedChildProfile);
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     // Endpoint to retrieve a child profile by ID
@@ -45,6 +81,7 @@ public class ChildProfileController {
         childProfileService.deleteChildProfile(childProfileId);
         return ResponseEntity.noContent().build();
     }
+
     // Endpoint to retrieve all child profiles
     @GetMapping("/all")
     public ResponseEntity<List<ChildProfileModel>> getAllChildProfiles() {
@@ -52,4 +89,3 @@ public class ChildProfileController {
         return ResponseEntity.ok(childProfiles);
     }
 }
-

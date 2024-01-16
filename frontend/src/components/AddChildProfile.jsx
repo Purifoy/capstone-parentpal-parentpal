@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 
-function AddEditChildProfile(child) {
+function AddChildProfile(child) {
   const [name, setName] = useState(child.name);
   const [age, setAge] = useState(child.age);
 
@@ -10,10 +10,10 @@ function AddEditChildProfile(child) {
     const childData = { id: child?.id, name, age };
     try {
       if (child && child.id) {
-        await axios.put("/api/childprofile", childData);
+        await axios.put("/api/childprofile", childData); //edit existing
         console.log("It works! updated database");
       } else {
-        await axios.post("/api/childprofile", childData);
+        await axios.post("/api/childprofile", childData); //add
         console.log("It works! added to database");
 
         //Success message
@@ -27,7 +27,6 @@ function AddEditChildProfile(child) {
       // Clear the input fields after successful submission
       setName("");
       setAge("");
-      
     } catch (error) {
       console.error("Error adding child to database: ", error);
     }
@@ -80,4 +79,4 @@ function AddEditChildProfile(child) {
   );
 }
 
-export default AddEditChildProfile;
+export default AddChildProfile;

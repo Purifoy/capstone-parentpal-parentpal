@@ -22,7 +22,6 @@ public class ChildProfileModel {
         this.age = age;
     }
 
-    
     public Long getId() {
         return id;
     }

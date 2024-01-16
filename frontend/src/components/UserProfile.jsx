@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import AddEditChildProfile from "./AddEditChildProfile";
+import AddChildProfile from "./AddChildProfile";
 import { useNavigate } from "react-router-dom";
 
 function UserProfile({ userId }) {
@@ -100,7 +100,7 @@ function UserProfile({ userId }) {
         {showAddChildForm && (
           <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
             <div className="bg-transparent p-6 rounded-lg">
-              <AddEditChildProfile onFormSubmit={handleFormSubmit} />
+              <AddChildProfile onFormSubmit={handleFormSubmit} />
               <button
                 className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4"
                 onClick={() => {

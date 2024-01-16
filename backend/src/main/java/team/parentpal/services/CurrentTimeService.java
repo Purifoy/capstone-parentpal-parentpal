@@ -12,6 +12,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 
 @Service
@@ -56,11 +59,13 @@ public class CurrentTimeService {
 
     private String formatTime(String datetime) {
         try {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSXXX");
-            Date date = inputFormat.parse(datetime);
-            SimpleDateFormat outputFormat = new SimpleDateFormat("HH:mm:ss");
-            return outputFormat.format(date);
-        } catch (ParseException e) {
+            // Parse the datetime string into a Date object
+            ZonedDateTime zonedDateTime = ZonedDateTime.parse(datetime, DateTimeFormatter.ISO_OFFSET_DATE_TIME);
+    
+            // Format the Date object as a string in the desired format
+            DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("EEE, dd MMM yyyy HH:mm:ss z");
+            return zonedDateTime.format(outputFormatter);
+        } catch (DateTimeParseException e) {
             e.printStackTrace();
             return null;
         }

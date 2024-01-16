@@ -21,9 +21,10 @@ public class Populator implements CommandLineRunner {
     @Resource
     private ChildProfileRepository childProfileRepository;
 
-    // public Populator(UserRepository userRepository, ConsumeRepository consumeRepository) {
-    //     this.userRepository = userRepository;
-    //     this.consumeRepository = consumeRepository;
+    // public Populator(UserRepository userRepository, ConsumeRepository
+    // consumeRepository) {
+    // this.userRepository = userRepository;
+    // this.consumeRepository = consumeRepository;
     // }
 
     public Populator(UserRepository userRepository, ChildProfileRepository childProfileRepository) {
@@ -38,7 +39,7 @@ public class Populator implements CommandLineRunner {
         UserModel user2 = new UserModel("Guest", "guest", "noPassword", RoleEnum.GUEST);
         userRepository.save(user2);
 
-        ChildProfileModel child1 = new ChildProfileModel("Tim", "2 months");
+        ChildProfileModel child1 = new ChildProfileModel("Elsa", "2 months");
         childProfileRepository.save(child1);
     }
 

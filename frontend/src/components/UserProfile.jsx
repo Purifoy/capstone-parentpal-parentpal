@@ -71,7 +71,9 @@ function UserProfile({ userId }) {
   return (
     <>
       <div className="mt-20 text-2xl">
-        <h2 className="font-[Instrument] text-5xl ">Welcome {userName}!</h2>
+        <h2 className="mb-5 font-[Instrument] text-5xl ">
+          Welcome {userName}!
+        </h2>
       </div>
       <br />
       <div>
@@ -81,7 +83,7 @@ function UserProfile({ userId }) {
           alt="baby"
         />
       </div>
-      <h1 className="mt-10 font-bold font-[Play] text-xl ">Profiles</h1>
+      <h1 className="mt-10 mb-5 font-bold font-[Play] text-xl ">Profiles</h1>
       <br />
       <div className="flex flex-row gap-2 ">
         {childProfiles.map((profile) => (

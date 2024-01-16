@@ -29,9 +29,9 @@ public abstract class EventModel {
   public EventModel() {
   }
 
-  public EventModel(long childId, Date startTime, String notes) {
+  public EventModel(long childId, String notes) {
     this.childId = childId;
-    this.startTime = startTime;
+    this.startTime = new Date(System.currentTimeMillis());
     this.notes = notes;
   }
 

@@ -41,4 +41,9 @@ public class SleepController {
   public List<SleepModel> getSleepEvent(@PathVariable Date startDateTime, @PathVariable Date endDateTime) {
     return sleepRepository.findBySleepDateRange(startDateTime, endDateTime);
   }
+
+  @GetMapping("/child/{childId}")
+  public List<SleepModel> getSleepEventByChild(@PathVariable Long childId) {
+    return sleepRepository.findByChildId(childId);
+  }
 }

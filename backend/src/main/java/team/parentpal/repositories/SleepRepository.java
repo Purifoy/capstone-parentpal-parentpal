@@ -20,5 +20,6 @@ public interface SleepRepository extends CrudRepository<SleepModel, Long> {
   List<SleepModel> findBySleepDateRange(@Param("startDateTime") Date startDateTime,
       @Param("endDateTime") Date endDateTime);
 
-   
+  @Query("SELECT c FROM SleepModel c WHERE c.childId = :childId ORDER BY c.startTime DESC")
+  List<SleepModel> findByChildId(@Param("childId") Long childId);   
 }

@@ -41,4 +41,9 @@ public class ConsumeController {
   public List<ConsumeModel> getConsumeEvent(@PathVariable Date startDateTime, @PathVariable Date endDateTime) {
     return consumeRepository.findByConsumeDateRange(startDateTime, endDateTime);
   }
+
+  @GetMapping("/child/{childId}")
+  public List<ConsumeModel> getConsumeEventByChild(@PathVariable Long childId) {
+    return consumeRepository.findByChildId(childId);
+  }
 }

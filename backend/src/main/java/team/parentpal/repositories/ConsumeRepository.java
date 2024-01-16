@@ -17,4 +17,7 @@ public interface ConsumeRepository extends CrudRepository<ConsumeModel, Long> {
   @Query("SELECT c FROM ConsumeModel c WHERE c.startTime BETWEEN :startDateTime AND :endDateTime")
   List<ConsumeModel> findByConsumeDateRange(@Param("startDateTime") Date startDateTime,
       @Param("endDateTime") Date endDateTime);
+
+  @Query("SELECT c FROM ConsumeModel c WHERE c.childId = :childId ORDER BY c.startTime DESC")
+  List<ConsumeModel> findByChildId(@Param("childId") Long childId);
 }

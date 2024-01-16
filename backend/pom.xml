@@ -17,19 +17,6 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
-<<<<<<< HEAD
-=======
-	<dependency>
-    <groupId>com.h2database</groupId>
-    <artifactId>h2</artifactId>
-    <version>1.4.200</version>
-</dependency>
-<dependency>
-    <groupId>com.google.code.gson</groupId>
-    <artifactId>gson</artifactId>
-    <version>2.10</version> 
-</dependency>
->>>>>>> Gateway-Api
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

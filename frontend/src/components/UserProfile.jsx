@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import AddChildProfile from "./AddChildProfile";
 import { useNavigate } from "react-router-dom";
+import DigitalClock from "./DigitalClock";
 
 function UserProfile({ userId }) {
   const [userName, setUserName] = useState(null);
@@ -70,7 +71,8 @@ function UserProfile({ userId }) {
 
   return (
     <>
-      <div className="mt-20 text-2xl">
+    <div className="ml-[550px] pt-2 flex justify-end"><DigitalClock/></div>
+      <div className="mt-5 text-2xl">
         <h2 className="mb-5 font-[Instrument] text-5xl ">
           Welcome {userName}!
         </h2>

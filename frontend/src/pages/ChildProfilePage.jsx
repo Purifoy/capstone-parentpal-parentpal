@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NavBar2 from "../components/NavBar2";
 import Footer from "../components/Footer";
 import EditChildProfile from "../components/EditChildProfile";
+import DigitalClock from "../components/DigitalClock";
 
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
@@ -9,7 +10,7 @@ import axios from "axios";
 
 function ChildProfilePage() {
   //for the logs, start&end buttons
-  const [currentTime, setCurrentTime] = useState("Not Available");
+  const [currentTime, setCurrentTime] = useState(new Date());
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
 
@@ -30,8 +31,11 @@ function ChildProfilePage() {
   //this will get us the current time
   const handleLogCurrentTime = async (logType) => {
     try {
-      const now = new Date();
-      const formattedTime = now.toISOString().slice(0, 16).replace("T", " "); // Format as "yyyy-MM-dd'T'HH:mm"
+      const currentTime = new Date();
+      const formattedTime = currentTime
+        .toISOString()
+        .slice(0, 16)
+        .replace("T", " "); // Format as "yyyy-MM-dd'T'HH:mm"
 
       if (logType === "start") {
         setStartTime(formattedTime);
@@ -43,6 +47,7 @@ function ChildProfilePage() {
 
       setCurrentTime(formattedTime);
       console.log("Got the time!", formattedTime);
+      console.log(endTime);
     } catch (error) {
       console.error("Error logging time: ", error);
     }
@@ -54,7 +59,7 @@ function ChildProfilePage() {
     try {
       const response = await axios.post("/sleep/new", {
         childId: childData.id,
-        startTime: new Date(startTime), // Convert Time to Date object
+        startTime: new Date(startTime), // Converting to a Date Object
         endTime: new Date(endTime),
       });
 
@@ -85,6 +90,9 @@ function ChildProfilePage() {
           <div className="w-full max-w-2xl bg-[#FFD9B7] bg-opacity-75 border border-[#FFD9B7] rounded-lg shadow">
             <div className="flex justify-end p-4 "></div>
             <div className="flex flex-col items-center pb-10">
+              <div className="ml-[500px] flex justify-end">
+                <DigitalClock />
+              </div>
               <div className="w-40 h-40 mb-5 rounded-full bg-slate-800 flex items-center justify-center">
                 <img
                   className="w-40 h-40 rounded-full"
@@ -111,7 +119,7 @@ function ChildProfilePage() {
                 </button>
               </div>
               {/*SleepLog code  starts here */}
-              <div className="mt-10">
+              <div className="mt-10 p-5">
                 <h1 className="flex justify-center mb-5 font-[Mont]">
                   <span className="font-bold">Sleep Log</span>
                 </h1>

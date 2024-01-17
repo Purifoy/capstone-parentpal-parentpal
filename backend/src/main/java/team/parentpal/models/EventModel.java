@@ -33,6 +33,11 @@ public abstract class EventModel {
 
   private String notes;
 
+  private Double durationInMills;
+
+  private int durationHours;
+  private int durationMinutes;
+
   public EventModel() {
   }
 
@@ -53,6 +58,24 @@ public abstract class EventModel {
     this.startTime = startTime;
     this.endTime = endTime;
     this.notes = notes;
+    this.durationInMills = calcDurationInMills();
+    calcDurationHoursAndMinutes();
+  }
+
+  public Double calcDurationInMills() {
+    Double result = null;
+    if (this.endTime != null && this.startTime != null) {
+      result = (double) (this.endTime.getTime() - this.startTime.getTime());
+    }
+
+    return result;
+  }
+
+  public void calcDurationHoursAndMinutes() {
+    if (this.durationInMills != null) {
+      this.durationHours = (int) (this.durationInMills / 3600000);
+      this.durationMinutes = (int) ((this.durationInMills % 3600000) / 60000);
+    }
   }
 
   public Long getId() {
@@ -93,6 +116,19 @@ public abstract class EventModel {
 
   public void setEndTime(Date endTime) {
     this.endTime = endTime;
+    durationInMills = calcDurationInMills();
+  }
+
+  public Double getDurationInMills() {
+    return durationInMills;
+  }
+
+  public int getDurationHours() {
+    return durationHours;
+  }
+
+  public int getDurationMinutes() {
+    return durationMinutes;
   }
 
 }

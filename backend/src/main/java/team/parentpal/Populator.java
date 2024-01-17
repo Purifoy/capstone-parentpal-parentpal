@@ -48,8 +48,9 @@ public class Populator implements CommandLineRunner {
         ChildProfileModel child1 = new ChildProfileModel("Elsa", "2 months");
         childProfileRepository.save(child1);
         Date dateTimeNow = new Date(System.currentTimeMillis());
+        Date dateTimeTomorrow = new Date(System.currentTimeMillis() + 86400000);
         SleepModel sleep1 = new SleepModel(child1.getId(), dateTimeNow,
-                dateTimeNow, "Nap");
+                dateTimeTomorrow, "Nap");
         sleepRepository.save(sleep1);
     }
 

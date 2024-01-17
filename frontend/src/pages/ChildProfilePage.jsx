@@ -13,6 +13,8 @@ function ChildProfilePage() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
+  const [duration, setDuration] = useState(null);
+  const [note, setNote] = useState(null);
 
   //for the edit button
   const [isEditing, setIsEditing] = useState(false);
@@ -25,7 +27,7 @@ function ChildProfilePage() {
     navigate("/Dashboard");
   };
 
-  //edit child profile (currently in progress)
+  //edit child profile (currently in progress...)
   const handleEdit = (childId) => {
     console.log(`Button clicked for Child with ID # ${childId}`);
     setIsEditing(true);
@@ -37,8 +39,8 @@ function ChildProfilePage() {
       const currentTime = new Date();
       const formattedTime = currentTime
         .toISOString()
-        .slice(0, 16)
-        .replace("T", " "); // Format as "yyyy-MM-dd'T'HH:mm"
+        .slice(0, 19)
+        .replace("T", " "); // Format as "yyyy-MM-dd'T'HH:mm:ss"
 
       if (logType === "start") {
         setStartTime(formattedTime);
@@ -46,6 +48,19 @@ function ChildProfilePage() {
       } else if (logType === "end") {
         setEndTime(formattedTime);
         console.log("End time set!", formattedTime);
+
+        //once the endSleep button is clicked the duration will be calculated
+        const startDateTime = new Date(startTime);
+        const endDateTime = new Date(endTime);
+        // Calculate the duration in milliseconds
+        const durationInMill = Math.abs(endDateTime - startDateTime);
+
+        // Convert the Date object to string with HH:mm:ss format
+        const duration = new Date(durationInMill).toISOString().slice(11, 19);
+
+        // Set the calculated duration in the component state
+        setDuration(duration);
+        console.log("Duration:", duration);
       }
 
       setCurrentTime(formattedTime);
@@ -54,16 +69,33 @@ function ChildProfilePage() {
     }
   };
 
-  // save button
+  // handle note input change
+  const handleNoteChange = (e) => {
+    setNote(e.target.value);
+  };
+  // handle saving the note
+  const handleSaveNote = () => {
+    //log current value of note
+    console.log("Note saved:", note);
+
+    // Clear the input by setting the note state to an empty string
+    setNote("");
+  };
+
+  // handle Save button
   const handleSave = async (e) => {
     e.preventDefault();
 
     try {
       if (startTime && endTime !== null) {
+        //start and end time must have a value
+
+        //data will be pushed to the backend database
         const response = await axios.post("/api/sleep/new", {
           childId: childData.id,
           startTime: new Date(startTime), // Converting to a Date Object
           endTime: new Date(endTime),
+          note,
         });
 
         console.log("Log Saved!", response.data);
@@ -132,14 +164,29 @@ function ChildProfilePage() {
                 <h1 className="flex justify-center mb-5 font-[Mont]">
                   <span className="font-bold">Sleep Log</span>
                 </h1>
-                <ul className="flex flex-row justify-center gap-8">
+                <ul className="pl-5 pr-5 flex justify-center gap-8">
                   <li>Start Time: {startTime}</li>
 
                   <li className="pl-5 pr-5 border-x-2 border-black">
                     End time: {endTime}
                   </li>
-
-                  <li>Duration: {childData.duration || "Not available"}</li>
+                  <li>
+                    Note:
+                    <br />
+                    <input
+                      className="font-[Roboto] m-2 w-[150px] h-8 opacity-80 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-green-300"
+                      type="text"
+                      placeholder="Add a note..."
+                      value={note}
+                      onChange={handleNoteChange}
+                    />
+                    <button
+                      className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-3 py-2 text-center"
+                      onClick={handleSaveNote}
+                    >
+                      Log Note
+                    </button>
+                  </li>
                 </ul>
               </div>
 
@@ -169,12 +216,15 @@ function ChildProfilePage() {
                 <h1 className="flex justify-center mb-5 font-[Mont]">
                   <span className="font-bold">Feed Log</span>
                 </h1>
-                <ul className="flex flex-row justify-center gap-8">
+                <ul className="pl-5 pr-5 flex flex-row justify-center gap-8">
                   <li>Start Time: {"Not available"}</li>
                   <li className="pl-5 pr-5 border-x-2 border-black">
                     End time: {"Not available"}
                   </li>
-                  <li>Duration: {"Not available"}</li>
+                  <li className=" border-r-2 border-solid border-black">
+                    Duration: {"Not available"}
+                  </li>
+                  <li>Notes: {"Not available"}</li>
                 </ul>
               </div>
               <div className="flex mt-4 md:mt-6">

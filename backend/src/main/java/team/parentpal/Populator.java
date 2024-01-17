@@ -1,14 +1,18 @@
 package team.parentpal;
 
+import java.sql.Date;
+
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 import jakarta.annotation.Resource;
 
 import team.parentpal.enums.RoleEnum;
 import team.parentpal.models.ChildProfileModel;
+import team.parentpal.models.SleepModel;
 import team.parentpal.models.UserModel;
 import team.parentpal.repositories.ChildProfileRepository;
 import team.parentpal.repositories.ConsumeRepository;
+import team.parentpal.repositories.SleepRepository;
 import team.parentpal.repositories.UserRepository;
 
 @Component
@@ -20,6 +24,8 @@ public class Populator implements CommandLineRunner {
     private ConsumeRepository consumeRepository;
     @Resource
     private ChildProfileRepository childProfileRepository;
+    @Resource
+    private SleepRepository sleepRepository;
 
     // public Populator(UserRepository userRepository, ConsumeRepository
     // consumeRepository) {
@@ -41,6 +47,10 @@ public class Populator implements CommandLineRunner {
 
         ChildProfileModel child1 = new ChildProfileModel("Elsa", "2 months");
         childProfileRepository.save(child1);
+        Date dateTimeNow = new Date(System.currentTimeMillis());
+        SleepModel sleep1 = new SleepModel(child1.getId(), dateTimeNow,
+                dateTimeNow, "Nap");
+        sleepRepository.save(sleep1);
     }
 
 }

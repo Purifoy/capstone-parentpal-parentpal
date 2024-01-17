@@ -12,4 +12,12 @@ public class SleepModel extends EventModel {
   public SleepModel(long childId, String notes) {
     super(childId, notes);
   }
+
+  public SleepModel(long childId, Date startTime, String notes) {
+    super(childId, startTime, notes);
+  }
+
+  public SleepModel(Long childId, Date startTime, Date endTime, String notes) {
+    super(childId, startTime, endTime, notes);
+  }
 }

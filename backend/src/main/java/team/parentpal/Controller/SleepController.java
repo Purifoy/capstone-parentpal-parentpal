@@ -9,6 +9,7 @@ import org.springframework.lang.NonNull;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,6 +25,11 @@ public class SleepController {
 
   @PostMapping("/new")
   public @NonNull SleepModel addSleepEvent(@RequestBody SleepModel sleep) {
+    return sleepRepository.save(sleep);
+  }
+
+  @PutMapping("/new/sleep/{sleepId}")
+  public @NonNull SleepModel updateSleepEvent(@RequestBody SleepModel sleep) {
     return sleepRepository.save(sleep);
   }
 

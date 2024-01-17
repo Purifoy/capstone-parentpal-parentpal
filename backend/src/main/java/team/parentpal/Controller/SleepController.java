@@ -28,7 +28,7 @@ public class SleepController {
     return sleepRepository.save(sleep);
   }
 
-  @PutMapping("/new/sleep/{sleepId}")
+  @PutMapping("/update/{sleepId}")
   public @NonNull SleepModel updateSleepEvent(@RequestBody SleepModel sleep) {
     return sleepRepository.save(sleep);
   }

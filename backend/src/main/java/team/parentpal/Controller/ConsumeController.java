@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import team.parentpal.models.ConsumeModel;
 import team.parentpal.repositories.ConsumeRepository;
+import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController
 @RequestMapping("/api/consume")
@@ -24,6 +25,11 @@ public class ConsumeController {
 
   @PostMapping("/new")
   public @NonNull ConsumeModel addConsumeEvent(@RequestBody ConsumeModel consume) {
+    return consumeRepository.save(consume);
+  }
+
+  @PutMapping("/update/{consumeId}")
+  public @NonNull ConsumeModel updateconsumeEvent(@RequestBody ConsumeModel consume) {
     return consumeRepository.save(consume);
   }
 

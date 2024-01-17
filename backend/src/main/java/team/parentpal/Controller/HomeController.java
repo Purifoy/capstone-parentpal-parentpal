@@ -20,7 +20,7 @@ public class HomeController {
         this.currentTimeService = currentTimeService;
     }
 
-    @GetMapping("/api")
+    @GetMapping("/api/clock")
     public String home(@RequestHeader(name = "timezone", required = false) String timezone, Model model) {
         try {
             String currentTime = currentTimeService.getCurrentTime("http://worldtimeapi.org/api/ip");

@@ -37,7 +37,7 @@ public class ChildProfileController {
         return ResponseEntity.ok(createdProfile);
     }
 
-    @PutMapping("/api/childprofile/{childProfileId}")
+    @PutMapping("/{childProfileId}")
     public ResponseEntity<?> updateChildProfile(
             @PathVariable Long childProfileId,
             @RequestBody ChildProfileModel newChildProfile,

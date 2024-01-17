@@ -15,8 +15,10 @@ import jakarta.persistence.TemporalType;
 public abstract class EventModel {
   @Id
   @GeneratedValue
+  @Column(name = "event_id")
   private Long id;
 
+  @Column(name = "child_id")
   private long childId;
 
   @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")

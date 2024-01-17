@@ -19,16 +19,19 @@ function ChildProfilePage() {
   const location = useLocation();
   const [childData, setChildData] = useState(location.state?.childData || {});
   const navigate = useNavigate();
+
+  //return to dashboard
   const handleGoBack = () => {
     navigate("/Dashboard");
   };
 
+  //edit child profile (currently in progress)
   const handleEdit = (childId) => {
     console.log(`Button clicked for Child with ID # ${childId}`);
     setIsEditing(true);
   };
 
-  //this will get us the current time
+  //this will get us the current time for sleep event
   const handleLogCurrentTime = async (logType) => {
     try {
       const currentTime = new Date();
@@ -46,24 +49,30 @@ function ChildProfilePage() {
       }
 
       setCurrentTime(formattedTime);
-      console.log("Got the time!", formattedTime);
-      console.log(endTime);
     } catch (error) {
       console.error("Error logging time: ", error);
     }
   };
 
+  // save button
   const handleSave = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axios.post("/sleep/new", {
-        childId: childData.id,
-        startTime: new Date(startTime), // Converting to a Date Object
-        endTime: new Date(endTime),
-      });
+      if (startTime && endTime !== null) {
+        const response = await axios.post("/api/sleep/new", {
+          childId: childData.id,
+          startTime: new Date(startTime), // Converting to a Date Object
+          endTime: new Date(endTime),
+        });
 
-      console.log("Log Saved!", response.data);
+        console.log("Log Saved!", response.data);
+
+        //Reset startTime and endTime to null
+        setStartTime(null);
+        setEndTime(null);
+      }
+      console.log("StartTime and EndTime must have a value!");
     } catch (error) {
       console.log("Error saving log!", error);
     }

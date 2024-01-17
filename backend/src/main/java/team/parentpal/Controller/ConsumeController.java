@@ -17,7 +17,7 @@ import team.parentpal.models.ConsumeModel;
 import team.parentpal.repositories.ConsumeRepository;
 
 @RestController
-@RequestMapping("/consume")
+@RequestMapping("/api/consume")
 public class ConsumeController {
   @Autowired
   private ConsumeRepository consumeRepository;

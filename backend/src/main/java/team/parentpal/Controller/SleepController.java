@@ -18,7 +18,7 @@ import team.parentpal.models.SleepModel;
 import team.parentpal.repositories.SleepRepository;
 
 @RestController
-@RequestMapping("/sleep")
+@RequestMapping("/api/sleep")
 public class SleepController {
   @Autowired
   private SleepRepository sleepRepository;

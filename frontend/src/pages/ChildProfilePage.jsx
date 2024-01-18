@@ -10,7 +10,6 @@ import axios from "axios";
 
 import defaultChildImage from "../assets/baby4.jpg";
 
-
 function ChildProfilePage() {
   //for the logs, start&end buttons
   const [startTime, setStartTime] = useState(null);
@@ -29,7 +28,7 @@ function ChildProfilePage() {
   const navigate = useNavigate();
 
   //determine if i have a new childprofile
-  const [isNewChild, setIsNewChild] = useState(childData.id !== 1 );
+  const [isNewChild, setIsNewChild] = useState(childData.id !== 1);
 
   //return to dashboard
   const handleGoBack = () => {
@@ -38,8 +37,12 @@ function ChildProfilePage() {
 
   //edit child profile (currently in progress...)
   const handleEdit = (childId) => {
-    console.log(`Button clicked for Child with ID # ${childId}`);
+    console.log(`bbButton clicked for Child with ID # ${childId}`);
     setIsEditing(true);
+  };
+
+  const handleEditClose = () => {
+    setIsEditing(false);
   };
 
   //handle Delete button
@@ -179,7 +182,7 @@ function ChildProfilePage() {
               <div className="w-40 h-40 mb-5 rounded-full bg-slate-800 flex items-center justify-center">
                 <img
                   className="w-40 h-40 rounded-full"
-                  src={isNewChild? defaultChildImage : "/src/assets/baby1.jpg" }
+                  src={isNewChild ? defaultChildImage : "/src/assets/baby1.jpg"}
                   alt="Baby Image"
                 />
               </div>
@@ -308,10 +311,13 @@ function ChildProfilePage() {
             </div>
             <div></div>
 
-            {isEditing && ( ///EDIT is not working yet
+            {isEditing && (
               <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
                 <div className="bg-transparent p-6 rounded-lg">
-                  <EditChildProfile childId={childData.id} />
+                  <EditChildProfile
+                    childId={childData.id}
+                    onClose={handleEditClose}
+                  />
                   <button
                     className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4"
                     onClick={() => {

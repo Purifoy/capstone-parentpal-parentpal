@@ -15,34 +15,12 @@ public class ChildProfileService {
 
     @Autowired
     private ChildProfileRepository childProfileRepository;
-    
+
     public ChildProfileModel addChildProfile(ChildProfileModel childProfile) {
         Objects.requireNonNull(childProfile, "Child profile must not be null");
 
         return childProfileRepository.save(childProfile);
     }
-
-    public ChildProfileModel editChildProfile(Long childProfileId, ChildProfileModel newChildProfile) {
-        Objects.requireNonNull(childProfileId, "Child profile ID must not be null");
-    
-        // Get the existing child profile by ID
-        Optional<ChildProfileModel> existingChildProfileOptional = childProfileRepository.findById(childProfileId);
-    
-        if (existingChildProfileOptional.isPresent()) {
-            ChildProfileModel existingChildProfile = existingChildProfileOptional.get();
-    
-            // Update the existing child profile with the new data
-            existingChildProfile.setName(newChildProfile.getName());
-            existingChildProfile.setAge(newChildProfile.getAge());
-            // Update other fields as needed
-    
-            // Save the updated child profile
-            return childProfileRepository.save(existingChildProfile);
-        } else {
-            throw new IllegalArgumentException("Child profile not found with ID: " + childProfileId);
-        }
-    }
-    
 
     public void deleteChildProfile(Long childProfileId) {
         Objects.requireNonNull(childProfileId, "Child profile ID must not be null");
@@ -62,4 +40,22 @@ public class ChildProfileService {
         Objects.requireNonNull(name, "Name must not be null");
         return childProfileRepository.findByName(name);
     }
+
+
+
+    public ChildProfileModel updateChildProfile(Long childProfileId, ChildProfileModel updatedProfile) {
+        Objects.requireNonNull(childProfileId, "Child profile ID must not be null");
+        Objects.requireNonNull(updatedProfile, "Updated profile must not be null");
+
+        ChildProfileModel existingProfile = childProfileRepository.findById(childProfileId)
+                .orElseThrow(() -> new IllegalArgumentException("Child profile not found with ID: " + childProfileId));
+
+        // Update the fields you want to allow modification
+        existingProfile.setName(updatedProfile.getName());
+        existingProfile.setAge(updatedProfile.getAge());
+        
+        // Save the updated profile
+        return childProfileRepository.save(existingProfile);
+    }
+
 }

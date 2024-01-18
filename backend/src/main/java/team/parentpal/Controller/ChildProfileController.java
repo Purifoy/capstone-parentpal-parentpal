@@ -37,35 +37,6 @@ public class ChildProfileController {
         return ResponseEntity.ok(createdProfile);
     }
 
-    @PutMapping("/{childProfileId}")
-    public ResponseEntity<?> updateChildProfile(
-            @PathVariable Long childProfileId,
-            @RequestBody ChildProfileModel newChildProfile,
-            HttpServletRequest request) {
-        try {
-            
-            // Find the existing child profile by ID
-            Optional<ChildProfileModel> existingChildProfileOptional = childProfileRepository.findById(childProfileId);
-
-            if (existingChildProfileOptional.isPresent()) {
-                ChildProfileModel existingChildProfile = existingChildProfileOptional.get();
-
-                // Update the existing child profile with the new data
-                existingChildProfile.setName(newChildProfile.getName());
-                existingChildProfile.setAge(newChildProfile.getAge());
-
-                // Save the updated child profile
-                ChildProfileModel updatedChildProfile = childProfileRepository.save(existingChildProfile);
-
-                return ResponseEntity.ok(updatedChildProfile);
-            } else {
-                return ResponseEntity.notFound().build();
-            }
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
-
     // Endpoint to retrieve a child profile by ID
     @GetMapping("/{childProfileId}")
     public ResponseEntity<ChildProfileModel> getChildProfile(@PathVariable Long childProfileId) {

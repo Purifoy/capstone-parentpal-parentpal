@@ -3,25 +3,17 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 
 function EditChildProfile(childId) {
-  const [name, setName] = useState(childId.name || "");
-  const [age, setAge] = useState(childId.age || "");
- 
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
 
   const handleSubmit = async (e) => {
-
-    console.log("this is the value of childID: ", childId, name, age)
-
+    console.log("this is the value of childID: ", childId, name, age);
 
     e.preventDefault();
-    
+
     //push the update to the backend
     try {
-      await axios.put(`/api/editchildprofile/${childId}` , {
-        id: childId,
-        name,
-        age
-      
-      });
+      await axios.put("api/editchildprofile/${childId}", {});
       console.log("It works! successfully updated data");
 
       //Success message
@@ -31,12 +23,26 @@ function EditChildProfile(childId) {
         icon: "success",
       });
 
+      // Close the edit modal or perform any other actions
+      onClose();
       // Clear the input fields after successful submission
       setName("");
       setAge("");
     } catch (error) {
       console.error("Error updating child's information: ", error);
     }
+  };
+
+  const handleAgeChange = (e) => {
+    const ageValue = e.target.value;
+    console.log("Child Age:", ageValue);
+    setAge(ageValue);
+  };
+
+  const handleNameChange = (e) => {
+    const nameValue = e.target.value;
+    console.log("Child name:", nameValue);
+    setName(nameValue);
   };
 
   return (
@@ -57,7 +63,7 @@ function EditChildProfile(childId) {
                 id="small-input"
                 className="block w-full mt-2 p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 "
                 value={name}
-                onChange={(e) => setName(e.target.value)}
+                onChange={handleNameChange}
               />
             </div>
             <div>
@@ -67,13 +73,13 @@ function EditChildProfile(childId) {
                 id="small-input"
                 className="block w-full mt-2 p-2 text-gray-900 border border-gray-500 rounded-lg bg-gray-50 sm:text-xs focus:ring-blue-500 focus:border-blue-500 "
                 value={age}
-                onChange={(e) => setAge(e.target.value)}
+                onChange={handleAgeChange}
               />
             </div>
 
             <div className="pt-3 flex justify-center">
               <button
-                onClick={handleSubmit}//testing something out
+                onClick={handleSubmit} //testing something out
                 type="submit"
                 className="h-8 flex items-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >

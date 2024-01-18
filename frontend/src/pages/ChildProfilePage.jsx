@@ -71,17 +71,19 @@ function ChildProfilePage() {
           ///////// Calculate duration here ////////////////
           try {
             const startDateTime = new Date(startTime); // converting to a date object
-            const endDateTime = new Date(endTime);
+            const endDateTime = new Date(formattedTime); // Use formattedTime directly
 
             // Calculate the time difference in milliseconds
-            const timeDifferenceMs = endDateTime - startDateTime;
+            const timeDifferenceMs = Math.abs(endDateTime - startDateTime);
 
             // convert the time difference to a specific format (e.g., hours, minutes, seconds)
             const hours = Math.floor(timeDifferenceMs / (1000 * 60 * 60));
             const minutes = Math.floor(
               (timeDifferenceMs % (1000 * 60 * 60)) / (1000 * 60)
             );
-            const seconds = Math.floor((timeDifferenceMs % (1000 * 60)) / 1000);
+            const seconds = Math.floor(
+              ((timeDifferenceMs % (1000 * 60 * 60)) % (1000 * 60)) / 1000
+            );
 
             console.log(
               `Time Difference: ${hours} hours, ${minutes} minutes, ${seconds} seconds`

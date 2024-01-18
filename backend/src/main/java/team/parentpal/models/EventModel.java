@@ -52,6 +52,12 @@ public abstract class EventModel {
     this.startTime = startTime;
     this.notes = notes;
   }
+  
+  public EventModel(long childId, Date startTime, Date endTime) {
+    this.childId = childId;
+    this.startTime = startTime;
+    this.endTime = endTime;
+  }
 
   public EventModel(long childId, Date startTime, Date endTime, String notes) {
     this.childId = childId;

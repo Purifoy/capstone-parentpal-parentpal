@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar2 from "../components/NavBar2";
 import Footer from "../components/Footer";
 import EditChildProfile from "../components/EditChildProfile";
@@ -10,11 +10,14 @@ import axios from "axios";
 
 function ChildProfilePage() {
   //for the logs, start&end buttons
-  const [currentTime, setCurrentTime] = useState(new Date());
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
-  const [duration, setDuration] = useState(null);
-  const [note, setNote] = useState(null);
+  const [note, setNote] = useState("");
+
+  //for extracting duration values from backend
+  const [durationInSeconds, setDurationInSeconds] = useState(``);
+  const [durationHours, setDurationHours] = useState(``);
+  const [durationMinutes, setDurationMinutes] = useState(``);
 
   //for the edit button
   const [isEditing, setIsEditing] = useState(false);
@@ -33,6 +36,19 @@ function ChildProfilePage() {
     setIsEditing(true);
   };
 
+  //handle Delete button
+  const handleDelete = async (e) => {
+    try {
+      console.log("ChildId to delete:", childData.id);
+      await axios.delete(`api/childprofile/${childData.id}`);
+
+      // Navigate to Dashboard after successful deletion
+      navigate("/Dashboard");
+    } catch (error) {
+      console.error("Error deleting child profile:", error);
+    }
+  };
+
   //this will get us the current time for sleep event
   const handleLogCurrentTime = async (logType) => {
     try {
@@ -44,26 +60,39 @@ function ChildProfilePage() {
 
       if (logType === "start") {
         setStartTime(formattedTime);
+
         console.log("Start time set!", formattedTime);
       } else if (logType === "end") {
-        setEndTime(formattedTime);
-        console.log("End time set!", formattedTime);
+        // Check if startTime is available
+        if (startTime) {
+          setEndTime(formattedTime);
+          console.log("End time set!", formattedTime);
 
-        //once the endSleep button is clicked the duration will be calculated
-        const startDateTime = new Date(startTime);
-        const endDateTime = new Date(endTime);
-        // Calculate the duration in milliseconds
-        const durationInMill = Math.abs(endDateTime - startDateTime);
+          ///////// Calculate duration here ////////////////
+          try {
+            const startDateTime = new Date(startTime); // converting to a date object
+            const endDateTime = new Date(endTime);
 
-        // Convert the Date object to string with HH:mm:ss format
-        const duration = new Date(durationInMill).toISOString().slice(11, 19);
+            // Calculate the time difference in milliseconds
+            const timeDifferenceMs = endDateTime - startDateTime;
 
-        // Set the calculated duration in the component state
-        setDuration(duration);
-        console.log("Duration:", duration);
+            // convert the time difference to a specific format (e.g., hours, minutes, seconds)
+            const hours = Math.floor(timeDifferenceMs / (1000 * 60 * 60));
+            const minutes = Math.floor(
+              (timeDifferenceMs % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const seconds = Math.floor((timeDifferenceMs % (1000 * 60)) / 1000);
+
+            console.log(
+              `Time Difference: ${hours} hours, ${minutes} minutes, ${seconds} seconds`
+            );
+          } catch (error) {
+            console.log("Duration Calculation Error:", error);
+          }
+        } else {
+          console.error("Error: Cannot set end time without start time");
+        }
       }
-
-      setCurrentTime(formattedTime);
     } catch (error) {
       console.error("Error logging time: ", error);
     }
@@ -72,14 +101,6 @@ function ChildProfilePage() {
   // handle note input change
   const handleNoteChange = (e) => {
     setNote(e.target.value);
-  };
-  // handle saving the note
-  const handleSaveNote = () => {
-    //log current value of note
-    console.log("Note saved:", note);
-
-    // Clear the input by setting the note state to an empty string
-    setNote("");
   };
 
   // handle Save button
@@ -95,7 +116,7 @@ function ChildProfilePage() {
           childId: childData.id,
           startTime: new Date(startTime), // Converting to a Date Object
           endTime: new Date(endTime),
-          note,
+          notes: note,
         });
 
         console.log("Log Saved!", response.data);
@@ -103,8 +124,8 @@ function ChildProfilePage() {
         //Reset startTime and endTime to null
         setStartTime(null);
         setEndTime(null);
+        setNote("");
       }
-      console.log("StartTime and EndTime must have a value!");
     } catch (error) {
       console.log("Error saving log!", error);
     }
@@ -155,11 +176,15 @@ function ChildProfilePage() {
                 >
                   Edit
                 </button>
-                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-red-700 border border-red-700 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red ms-3">
+                <button
+                  onClick={handleDelete}
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-red-700 border border-red-700 rounded-lg hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red ms-3"
+                >
                   Delete
                 </button>
               </div>
               {/*SleepLog code  starts here */}
+
               <div className="mt-10 p-5">
                 <h1 className="flex justify-center mb-5 font-[Mont]">
                   <span className="font-bold">Sleep Log</span>
@@ -170,22 +195,22 @@ function ChildProfilePage() {
                   <li className="pl-5 pr-5 border-x-2 border-black">
                     End time: {endTime}
                   </li>
+                  <li className="border-r-2 pr-2 border-black">
+                    Duration:
+                    {`${durationHours} H : ${durationMinutes} mins : ${durationInSeconds} seconds`
+                      .split(":")
+                      .join(":\n")}
+                  </li>
                   <li>
                     Note:
                     <br />
                     <input
-                      className="font-[Roboto] m-2 w-[150px] h-8 opacity-80 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-green-300"
+                      className="font-[Roboto] m-2 w-[150px] h-10 opacity-80 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-green-300"
                       type="text"
                       placeholder="Add a note..."
                       value={note}
                       onChange={handleNoteChange}
                     />
-                    <button
-                      className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-3 py-2 text-center"
-                      onClick={handleSaveNote}
-                    >
-                      Log Note
-                    </button>
                   </li>
                 </ul>
               </div>

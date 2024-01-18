@@ -1,16 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useLocation } from "react-router-dom";
 
-function EditChildProfile(child) {
-  const [name, setName] = useState(child.name || "");
-  const [age, setAge] = useState(child.age || "");
+function EditChildProfile(childId) {
+  const [name, setName] = useState(childId.name || "");
+  const [age, setAge] = useState(childId.age || "");
+ 
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const childData = { id: child?.id, name, age };
 
+    console.log("this is teh value of childID: ", childId)
+
+
+    e.preventDefault();
+    
+    
     try {
-      await axios.put(`/api/childprofile/${child.id}`, childData);
+      await axios.put(`/api/childprofile/${childId}`);
       console.log("It works! successfully updated data");
 
       //Success message
@@ -62,6 +68,7 @@ function EditChildProfile(child) {
 
             <div className="pt-3 flex justify-center">
               <button
+                onClick={handleSubmit}//testing something out
                 type="submit"
                 className="h-8 flex items-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
               >

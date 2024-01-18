@@ -8,6 +8,9 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 
+import defaultChildImage from "../assets/baby4.jpg";
+
+
 function ChildProfilePage() {
   //for the logs, start&end buttons
   const [startTime, setStartTime] = useState(null);
@@ -24,6 +27,9 @@ function ChildProfilePage() {
   const location = useLocation();
   const [childData, setChildData] = useState(location.state?.childData || {});
   const navigate = useNavigate();
+
+  //determine if i have a new childprofile
+  const [isNewChild, setIsNewChild] = useState(childData.id !== 1 );
 
   //return to dashboard
   const handleGoBack = () => {
@@ -85,6 +91,10 @@ function ChildProfilePage() {
               ((timeDifferenceMs % (1000 * 60 * 60)) % (1000 * 60)) / 1000
             );
 
+            setDurationHours(hours);
+            setDurationMinutes(minutes);
+            setDurationInSeconds(seconds);
+
             console.log(
               `Time Difference: ${hours} hours, ${minutes} minutes, ${seconds} seconds`
             );
@@ -122,11 +132,20 @@ function ChildProfilePage() {
         });
 
         console.log("Log Saved!", response.data);
+        //Success message
+        Swal.fire({
+          title: "Success!",
+          text: "Successfully saved Sleep Log",
+          icon: "success",
+        });
 
         //Reset startTime and endTime to null
         setStartTime(null);
         setEndTime(null);
         setNote("");
+        setDurationHours("");
+        setDurationMinutes("");
+        setDurationInSeconds("");
       }
     } catch (error) {
       console.log("Error saving log!", error);
@@ -151,7 +170,7 @@ function ChildProfilePage() {
               </button>
             </div>
           </div>
-          <div className="w-full max-w-2xl bg-[#FFD9B7] bg-opacity-75 border border-[#FFD9B7] rounded-lg shadow">
+          <div className="w-full max-w-3xl bg-[#FFD9B7] bg-opacity-75 border border-[#FFD9B7] rounded-lg shadow">
             <div className="flex justify-end p-4 "></div>
             <div className="flex flex-col items-center pb-10">
               <div className="ml-[500px] flex justify-end">
@@ -160,7 +179,7 @@ function ChildProfilePage() {
               <div className="w-40 h-40 mb-5 rounded-full bg-slate-800 flex items-center justify-center">
                 <img
                   className="w-40 h-40 rounded-full"
-                  src="/src/assets/baby1.jpg"
+                  src={isNewChild? defaultChildImage : "/src/assets/baby1.jpg" }
                   alt="Baby Image"
                 />
               </div>
@@ -191,20 +210,41 @@ function ChildProfilePage() {
                 <h1 className="flex justify-center mb-5 font-[Mont]">
                   <span className="font-bold">Sleep Log</span>
                 </h1>
-                <ul className="pl-5 pr-5 flex justify-center gap-8">
-                  <li>Start Time: {startTime}</li>
+                <ul className="font-[Roboto] pl-5 pr-5 flex justify-center gap-8">
+                  <li>
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      Start Time:{" "}
+                    </span>
+                    {"\n"}
+                    {startTime}
+                  </li>
 
                   <li className="pl-5 pr-5 border-x-2 border-black">
-                    End time: {endTime}
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      End Time:{" "}
+                    </span>
+                    {"\n"}
+                    {endTime}
                   </li>
-                  <li className="border-r-2 pr-2 border-black">
-                    Duration:
-                    {`${durationHours} H : ${durationMinutes} mins : ${durationInSeconds} seconds`
-                      .split(":")
-                      .join(":\n")}
-                  </li>
+                  <div
+                    className="border-r-2 pr-2 border-black"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
+                    {" "}
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      Duration:{" "}
+                    </span>
+                    {"\n"}
+                    <li>
+                      {` ${durationHours} hours, ${durationMinutes} minutes, ${durationInSeconds} seconds`}
+                    </li>
+                  </div>
+
                   <li>
-                    Note:
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      Note:{" "}
+                    </span>
+                    {"\n"}
                     <br />
                     <input
                       className="font-[Roboto] m-2 w-[150px] h-10 opacity-80 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-green-300"

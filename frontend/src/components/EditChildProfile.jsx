@@ -9,14 +9,19 @@ function EditChildProfile(childId) {
 
   const handleSubmit = async (e) => {
 
-    console.log("this is teh value of childID: ", childId)
+    console.log("this is the value of childID: ", childId, name, age)
 
 
     e.preventDefault();
     
-    
+    //push the update to the backend
     try {
-      await axios.put(`/api/childprofile/${childId}`);
+      await axios.put(`/api/editchildprofile/${childId}` , {
+        id: childId,
+        name,
+        age
+      
+      });
       console.log("It works! successfully updated data");
 
       //Success message

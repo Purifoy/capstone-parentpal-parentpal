@@ -10,6 +10,7 @@ function Logout() {
       const response = await axios.get("api/logout");
       console.log(response.data);
       navigate("/");
+      
     } catch (error) {
       console.error("Logout failed", error);
     }

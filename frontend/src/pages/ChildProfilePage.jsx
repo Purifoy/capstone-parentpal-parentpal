@@ -11,10 +11,14 @@ import axios from "axios";
 import defaultChildImage from "../assets/baby4.jpg";
 
 function ChildProfilePage() {
-  //for the logs, start&end buttons
+  //for sleep logs, start&end buttons
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [note, setNote] = useState("");
+  // for feed logs
+  const [startFeedTime, setStartFeedTime] = useState(null);
+  const [endFeedTime, setEndFeedTime] = useState(null);
+  const [feedNote, setFeedNote] = useState("");
 
   //for extracting duration values from backend
   const [durationInSeconds, setDurationInSeconds] = useState(``);
@@ -28,7 +32,7 @@ function ChildProfilePage() {
   const [childId, setChildId] = useState(location.state?.childData.id || null);
   const navigate = useNavigate();
 
-  //determine if i have a new childprofile
+  //this will determine if Child profile was added
   const [isNewChild, setIsNewChild] = useState(childData.id !== 1);
 
   //return to dashboard
@@ -38,7 +42,7 @@ function ChildProfilePage() {
 
   //edit child profile (currently in progress...)
   const handleEdit = () => {
-    console.log(`bbButton clicked for Child with ID # ${childId}`);
+    console.log(`Edit Button clicked for Child with ID # ${childId}`);
     setIsEditing(true);
   };
 
@@ -60,7 +64,7 @@ function ChildProfilePage() {
   };
 
   //this will get us the current time for sleep event
-  const handleLogCurrentTime = async (logType) => {
+  const handleLogCurrentSleepTime = async (logType) => {
     try {
       const currentTime = new Date();
       const formattedTime = currentTime
@@ -70,7 +74,6 @@ function ChildProfilePage() {
 
       if (logType === "start") {
         setStartTime(formattedTime);
-
         console.log("Start time set!", formattedTime);
       } else if (logType === "end") {
         // Check if startTime is available
@@ -114,19 +117,76 @@ function ChildProfilePage() {
     }
   };
 
-  // handle note input change
+  //this will get us the current time for feeding event
+  const handleLogCurrentFeedTime = async (logType) => {
+    try {
+      const currentTime = new Date();
+      const formattedTime = currentTime
+        .toISOString()
+        .slice(0, 19)
+        .replace("T", " "); // Format as "yyyy-MM-dd'T'HH:mm:ss"
+
+      if (logType === "startConsume") {
+        setStartFeedTime(formattedTime);
+        console.log("Start time set!", formattedTime);
+      } else if (logType === "endConsume") {
+        // Check if startTime is available
+        if (startFeedTime) {
+          setEndFeedTime(formattedTime);
+          console.log("End time set!", formattedTime);
+
+          ///////// Calculate duration here ////////////////
+          try {
+            const startDateTime = new Date(startFeedTime); // converting to a date object
+            const endDateTime = new Date(formattedTime); // Use formattedTime directly
+
+            // Calculate the time difference in milliseconds
+            const timeDifferenceMs = Math.abs(endDateTime - startDateTime);
+
+            // convert the time difference to a specific format (e.g., hours, minutes, seconds)
+            const hours = Math.floor(timeDifferenceMs / (1000 * 60 * 60));
+            const minutes = Math.floor(
+              (timeDifferenceMs % (1000 * 60 * 60)) / (1000 * 60)
+            );
+            const seconds = Math.floor(
+              ((timeDifferenceMs % (1000 * 60 * 60)) % (1000 * 60)) / 1000
+            );
+
+            setDurationHours(hours);
+            setDurationMinutes(minutes);
+            setDurationInSeconds(seconds);
+
+            console.log(
+              `Time Difference: ${hours} hours, ${minutes} minutes, ${seconds} seconds`
+            );
+          } catch (error) {
+            console.log("Duration Calculation Error:", error);
+          }
+        } else {
+          console.error("Error: Cannot set end time without start time");
+        }
+      }
+    } catch (error) {
+      console.error("Error logging time: ", error);
+    }
+  };
+
+  /************************************/
+  /*********sleep note and save********/
+  /************************************/
+
+  // handle note input change for sleep
   const handleNoteChange = (e) => {
     setNote(e.target.value);
   };
 
-  // handle Save button
+  // handle Save button for sleep log
   const handleSave = async (e) => {
     e.preventDefault();
 
     try {
+      //start and end time must have a value
       if (startTime && endTime !== null) {
-        //start and end time must have a value
-
         //data will be pushed to the backend database
         const response = await axios.post("/api/sleep/new", {
           childId: childData.id,
@@ -147,6 +207,49 @@ function ChildProfilePage() {
         setStartTime(null);
         setEndTime(null);
         setNote("");
+        setDurationHours("");
+        setDurationMinutes("");
+        setDurationInSeconds("");
+      }
+    } catch (error) {
+      console.log("Error saving log!", error);
+    }
+  };
+  /************************************/
+  /******feeding note and save********/
+  /************************************/
+  // handle note input change for sleep
+  const handleFeedNoteChange = (e) => {
+    setFeedNote(e.target.value);
+  };
+
+  // handle Save button for sleep log
+  const handleFeedSave = async (e) => {
+    e.preventDefault();
+
+    try {
+      //start and end time must have a value
+      if (startFeedTime && endFeedTime !== null) {
+        //data will be pushed to the backend database
+        const response = await axios.post("/api/consume/new", {
+          childId: childData.id,
+          startTime: new Date(startFeedTime), // Converting to a Date Object
+          endTime: new Date(endFeedTime),
+          notes: feedNote,
+        });
+
+        console.log("Log Saved!", response.data);
+        //Success message
+        Swal.fire({
+          title: "Success!",
+          text: "Successfully saved Feed Log",
+          icon: "success",
+        });
+
+        //Reset startTime and endTime to null
+        setStartFeedTime(null);
+        setEndFeedTime(null);
+        setFeedNote("");
         setDurationHours("");
         setDurationMinutes("");
         setDurationInSeconds("");
@@ -177,7 +280,7 @@ function ChildProfilePage() {
           <div className="w-full max-w-3xl bg-[#FFD9B7] bg-opacity-75 border border-[#FFD9B7] rounded-lg shadow">
             <div className="flex justify-end p-4 "></div>
             <div className="flex flex-col items-center pb-10">
-              <div className="ml-[500px] flex justify-end">
+              <div className="mb-5 flex justify-end">
                 <DigitalClock />
               </div>
               <div className="w-40 h-40 mb-5 rounded-full bg-slate-800 flex items-center justify-center">
@@ -263,13 +366,13 @@ function ChildProfilePage() {
 
               <div className="flex mt-4 md:mt-6">
                 <button
-                  onClick={() => handleLogCurrentTime("start")}
+                  onClick={() => handleLogCurrentSleepTime("start")}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
                 >
                   Start Sleep
                 </button>
                 <button
-                  onClick={() => handleLogCurrentTime("end")}
+                  onClick={() => handleLogCurrentSleepTime("end")}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
                 >
                   End Sleep
@@ -290,18 +393,18 @@ function ChildProfilePage() {
                 <ul className="pl-5 pr-5 flex flex-row justify-center gap-8">
                   <li>
                     <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
-                      Start Time:{" "}
+                      Start Feed:{" "}
                     </span>
                     {"\n"}
-                    {startTime}
+                    {startFeedTime}
                   </li>
 
                   <li className="pl-5 pr-5 border-x-2 border-black">
                     <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
-                      End Time:{" "}
+                      End Feed:{" "}
                     </span>
                     {"\n"}
-                    {endTime}
+                    {endFeedTime}
                   </li>
                   <div
                     className="border-r-2 pr-2 border-black"
@@ -327,20 +430,29 @@ function ChildProfilePage() {
                       className="font-[Roboto] m-2 w-[150px] h-10 opacity-80 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-green-300"
                       type="text"
                       placeholder="Add a note..."
-                      value={note}
-                      onChange={handleNoteChange}
+                      value={feedNote}
+                      onChange={handleFeedNoteChange}
                     />
                   </li>
                 </ul>
               </div>
               <div className="flex mt-4 md:mt-6">
-                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3">
-                  Start Time
+                <button
+                  onClick={() => handleLogCurrentFeedTime("startConsume")}
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
+                >
+                  Start Feed
                 </button>
-                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3">
+                <button
+                  onClick={() => handleLogCurrentFeedTime("endConsume")}
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg ms-3"
+                >
                   End Time
                 </button>
-                <button className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 rounded-lg ms-3">
+                <button
+                  onClick={handleFeedSave}
+                  className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-teal-300 rounded-lg ms-3"
+                >
                   Save
                 </button>
               </div>

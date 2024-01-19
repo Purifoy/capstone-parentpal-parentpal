@@ -44,7 +44,7 @@ const DigitalClock = ({ timezone }) => {
               timeZone: timezone,
               hour: "numeric",
               minute: "numeric",
-              second: "numeric",
+      
             })}
           </p>
         ) : (

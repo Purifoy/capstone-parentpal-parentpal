@@ -2,18 +2,21 @@ import React, { useState } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 
-function EditChildProfile(childId) {
+function EditChildProfile({ childId }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+  const [thischildId, setChildId] = useState(childId);
 
   const handleSubmit = async (e) => {
-    console.log("this is the value of childID: ", childId, name, age);
-
+    // console.log("this is the value of childID: ", thischildId, name, age);
     e.preventDefault();
 
     //push the update to the backend
     try {
-      await axios.put("api/editchildprofile/${childId}", {});
+      await axios.put(`api/editchildprofile/${thischildId}`, {
+        name,
+        age,
+      });
       console.log("It works! successfully updated data");
 
       //Success message
@@ -23,8 +26,10 @@ function EditChildProfile(childId) {
         icon: "success",
       });
 
-      // Close the edit modal or perform any other actions
-      onClose();
+     
+      //let's see what the new value of name and age are
+      console.log("childName:", name, "childAge:", age);
+
       // Clear the input fields after successful submission
       setName("");
       setAge("");

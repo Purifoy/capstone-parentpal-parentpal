@@ -25,6 +25,7 @@ function ChildProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
   const location = useLocation();
   const [childData, setChildData] = useState(location.state?.childData || {});
+  const [childId, setChildId] = useState(location.state?.childData.id || null);
   const navigate = useNavigate();
 
   //determine if i have a new childprofile
@@ -36,7 +37,7 @@ function ChildProfilePage() {
   };
 
   //edit child profile (currently in progress...)
-  const handleEdit = (childId) => {
+  const handleEdit = () => {
     console.log(`bbButton clicked for Child with ID # ${childId}`);
     setIsEditing(true);
   };
@@ -195,7 +196,7 @@ function ChildProfilePage() {
               <div className="font-[Play]">{childData.age} old</div>
               <div className="flex mt-4 md:mt-6">
                 <button
-                  onClick={() => handleEdit(childData.id)}
+                  onClick={() => handleEdit(childId)}
                   className="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-purple-700 rounded-lg hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 "
                 >
                   Edit
@@ -211,7 +212,7 @@ function ChildProfilePage() {
 
               <div className="mt-10 p-5">
                 <h1 className="flex justify-center mb-5 font-[Mont]">
-                  <span className="font-bold">Sleep Log</span>
+                  <span className="font-bold text-xl">Sleep Log</span>
                 </h1>
                 <ul className="font-[Roboto] pl-5 pr-5 flex justify-center gap-8">
                   <li>
@@ -284,17 +285,52 @@ function ChildProfilePage() {
               {/* Feed Log code starts here */}
               <div className="mt-10 ">
                 <h1 className="flex justify-center mb-5 font-[Mont]">
-                  <span className="font-bold">Feed Log</span>
+                  <span className="font-bold text-xl">Feed Log</span>
                 </h1>
                 <ul className="pl-5 pr-5 flex flex-row justify-center gap-8">
-                  <li>Start Time: {"Not available"}</li>
+                  <li>
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      Start Time:{" "}
+                    </span>
+                    {"\n"}
+                    {startTime}
+                  </li>
+
                   <li className="pl-5 pr-5 border-x-2 border-black">
-                    End time: {"Not available"}
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      End Time:{" "}
+                    </span>
+                    {"\n"}
+                    {endTime}
                   </li>
-                  <li className=" border-r-2 border-solid border-black">
-                    Duration: {"Not available"}
+                  <div
+                    className="border-r-2 pr-2 border-black"
+                    style={{ whiteSpace: "pre-line" }}
+                  >
+                    {" "}
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      Duration:{" "}
+                    </span>
+                    {"\n"}
+                    <li>
+                      {` ${durationHours} hours, ${durationMinutes} minutes, ${durationInSeconds} seconds`}
+                    </li>
+                  </div>
+
+                  <li>
+                    <span className="font-[Mont] font-bold text-lg text-black text-shadow-lg">
+                      Note:{" "}
+                    </span>
+                    {"\n"}
+                    <br />
+                    <input
+                      className="font-[Roboto] m-2 w-[150px] h-10 opacity-80 rounded-md border border-gray-300 focus:outline-none focus:ring focus:border-green-300"
+                      type="text"
+                      placeholder="Add a note..."
+                      value={note}
+                      onChange={handleNoteChange}
+                    />
                   </li>
-                  <li>Notes: {"Not available"}</li>
                 </ul>
               </div>
               <div className="flex mt-4 md:mt-6">
@@ -314,14 +350,17 @@ function ChildProfilePage() {
             {isEditing && (
               <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-50">
                 <div className="bg-transparent p-6 rounded-lg">
-                  <EditChildProfile
-                    childId={childData.id}
-                    onClose={handleEditClose}
-                  />
+                  {childId && (
+                    <EditChildProfile
+                      childId={childId}
+                      onClose={handleEditClose}
+                    />
+                  )}
                   <button
                     className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mt-4"
                     onClick={() => {
                       setIsEditing(false);
+                      navigate("/Dashboard"); // Navigate to the dashboard after clicking close
                     }}
                   >
                     Close

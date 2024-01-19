@@ -1,7 +1,7 @@
 import Home from "./pages/Home";
 import LoggedInDashboard from "./pages/LoggedInDashboard";
 import ChildProfilePage from "./pages/ChildProfilePage";
-import DigitalClock from "./components/DigitalClock";
+// import DigitalClock from "./components/DigitalClock";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import "./index.css";

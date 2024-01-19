@@ -9,8 +9,10 @@ function AddChildProfile(child) {
     e.preventDefault();
     const childData = { id: child?.id, name, age };
     try {
+
+   
       if (child && child.id) {
-        await axios.put("/api/childprofile", childData); //edit existing
+        await axios.put(`/api/editchildprofile/{id}`, childData); //edit existing
         console.log("It works! updated database");
       } else {
         await axios.post("/api/childprofile", childData); //add

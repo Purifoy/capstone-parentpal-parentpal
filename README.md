@@ -1,4 +1,5 @@
 ## ParentPal
+![Screenshot (191)](https://github.com/Purifoy/capstone-parentpal-parentpal/assets/24870574/6f5f99d6-8a3a-4cff-9eb0-aee1c2f813b5)
 
 ### Product Owner 
 Schryll Schuch
